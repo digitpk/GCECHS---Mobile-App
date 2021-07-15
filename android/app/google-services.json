@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "902426529724",
+    "project_id": "gcechs-org",
+    "storage_bucket": "gcechs-org.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:902426529724:android:394feac783f3fe47e8a5b9",
+        "android_client_info": {
+          "package_name": "com.gcechs.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "902426529724-hf10as2fmk5u0c3ik9qvgdcpnrppqfkt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVzbEUebV1Wrahkmw0VjE_dMGlinOjZZU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "902426529724-hf10as2fmk5u0c3ik9qvgdcpnrppqfkt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
