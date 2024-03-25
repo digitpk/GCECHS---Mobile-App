@@ -1,10 +1,91 @@
 {
   "project_info": {
     "project_number": "902426529724",
+    "firebase_url": "https://gcechs-org-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "gcechs-org",
     "storage_bucket": "gcechs-org.appspot.com"
   },
   "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:902426529724:android:64f0870084b8b5eae8a5b9",
+        "android_client_info": {
+          "package_name": "com.afrostarcinema.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "902426529724-mgshm74v2n7bdomlmd14db3a0e11him9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.afrostarcinema.app",
+            "certificate_hash": "24fec29ca50ae10e8a2a64965391f5997b7aedac"
+          }
+        },
+        {
+          "client_id": "902426529724-hf10as2fmk5u0c3ik9qvgdcpnrppqfkt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVzbEUebV1Wrahkmw0VjE_dMGlinOjZZU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "902426529724-hf10as2fmk5u0c3ik9qvgdcpnrppqfkt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "902426529724-oluoaqbfbg4qafeqqutob113mqvkt0ma.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.housingsociety"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:902426529724:android:cb3026c7cda8efdee8a5b9",
+        "android_client_info": {
+          "package_name": "com.example.housingsociety"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "902426529724-hf10as2fmk5u0c3ik9qvgdcpnrppqfkt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVzbEUebV1Wrahkmw0VjE_dMGlinOjZZU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "902426529724-hf10as2fmk5u0c3ik9qvgdcpnrppqfkt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "902426529724-oluoaqbfbg4qafeqqutob113mqvkt0ma.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.housingsociety"
+              }
+            }
+          ]
+        }
+      }
+    },
     {
       "client_info": {
         "mobilesdk_app_id": "1:902426529724:android:394feac783f3fe47e8a5b9",
@@ -29,6 +110,13 @@
             {
               "client_id": "902426529724-hf10as2fmk5u0c3ik9qvgdcpnrppqfkt.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "902426529724-oluoaqbfbg4qafeqqutob113mqvkt0ma.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.housingsociety"
+              }
             }
           ]
         }
