@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 class ReusableTextField extends StatelessWidget {
   final String labelText;
   final dynamic maxlines;
-  final TextInputType keyboardType;
-  final String initialValue;
-  final Function onTap;
-  final Icon prefixIcon;
-  final int maxLength;
-  final Function onChanged;
+  final TextInputType? keyboardType;
+  final String? initialValue;
+  final Function()? onTap;
+  final Icon? prefixIcon;
+  final int? maxLength;
+  final ValueChanged<String>? onChanged;
   final bool enabled;
   ReusableTextField({
-    @required this.labelText,
+    required this.labelText,
     this.maxlines,
     this.keyboardType,
     this.onTap,

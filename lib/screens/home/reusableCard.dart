@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:housingsociety/shared/constants.dart';
 
 class ReusableCard extends StatelessWidget {
-  final IconData icon;
-  final String text;
-  final Function onpress;
+  final IconData? icon;
+  final String? text;
+  final Function()? onpress;
 
   ReusableCard({this.icon, this.text, this.onpress});
   @override
@@ -25,7 +25,7 @@ class ReusableCard extends StatelessWidget {
                 height: 15.0,
               ),
               Text(
-                text,
+                text!,
                 style: TextStyle(
                   fontSize: 18.0,
                 ),

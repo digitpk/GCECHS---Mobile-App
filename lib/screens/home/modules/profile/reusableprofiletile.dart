@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ReusableProfileTile extends StatelessWidget {
-  final String label;
-  final String value;
-  final Function onpress;
+  final String? label;
+  final String? value;
+  final Function()? onpress;
   ReusableProfileTile({this.label, this.value, this.onpress});
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class ReusableProfileTile extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                label,
+                label!,
                 style: TextStyle(
                   fontSize: 18.0,
                 ),
@@ -23,7 +23,7 @@ class ReusableProfileTile extends StatelessWidget {
             ),
           ),
           Text(
-            value,
+            value!,
             style: TextStyle(
               fontSize: 18.0,
             ),

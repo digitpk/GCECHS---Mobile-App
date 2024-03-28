@@ -7,15 +7,15 @@ import 'package:url_launcher/url_launcher.dart';
 
 class AddVisitor extends StatefulWidget {
   static const String id = 'add_visitor';
-  final String name;
-  final String wing;
-  final String flatno;
-  final String purpose;
-  final String mobileNo;
-  final int flag;
-  final TimeOfDay selectedTimeIn;
-  final TimeOfDay selectedTimeOut;
-  final String docid;
+  final String? name;
+  final String? wing;
+  final String? flatno;
+  final String? purpose;
+  final String? mobileNo;
+  final int? flag;
+  final TimeOfDay? selectedTimeIn;
+  final TimeOfDay? selectedTimeOut;
+  final String? docid;
   AddVisitor(
       {this.name,
       this.wing,
@@ -35,10 +35,10 @@ class _AddVisitorState extends State<AddVisitor> {
   String name = '', wing = '', flatno = '', purpose = '', mobileNo = '';
   var usermobileNo = '';
   TimeOfDay selectedTimeIn = TimeOfDay.now();
-  TimeOfDay selectedTimeOut;
+  TimeOfDay? selectedTimeOut;
 
   Future selectTimeIn(BuildContext context) async {
-    TimeOfDay picked =
+    TimeOfDay? picked =
         await showTimePicker(context: context, initialTime: selectedTimeIn);
     if (picked != null) {
       setState(() {
@@ -48,7 +48,7 @@ class _AddVisitorState extends State<AddVisitor> {
   }
 
   Future selectTimeOut(BuildContext context) async {
-    TimeOfDay picked = await showTimePicker(
+    TimeOfDay? picked = await showTimePicker(
         context: context,
         initialTime: selectedTimeOut ?? TimeOfDay(hour: 0, minute: 0));
     if (picked != null) {
@@ -62,12 +62,12 @@ class _AddVisitorState extends State<AddVisitor> {
   void initState() {
     super.initState();
     if (widget.flag == 0) {
-      name = widget.name;
-      wing = widget.wing;
-      flatno = widget.flatno;
-      purpose = widget.purpose;
-      mobileNo = widget.mobileNo;
-      selectedTimeIn = widget.selectedTimeIn;
+      name = widget.name!;
+      wing = widget.wing!;
+      flatno = widget.flatno!;
+      purpose = widget.purpose!;
+      mobileNo = widget.mobileNo!;
+      selectedTimeIn = widget.selectedTimeIn!;
       selectedTimeOut = TimeOfDay.now();
     }
   }
@@ -220,7 +220,7 @@ class _AddVisitorState extends State<AddVisitor> {
                                 ),
                               )
                             : Text(
-                                'Out  ' + selectedTimeOut.format(context),
+                                'Out  ' + selectedTimeOut!.format(context),
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.white,
@@ -273,7 +273,7 @@ class _AddVisitorState extends State<AddVisitor> {
                   flatno,
                   purpose,
                   selectedTimeIn.format(context),
-                  selectedTimeOut.format(context),
+                  selectedTimeOut!.format(context),
                   widget.docid);
             } else {
               if (selectedTimeOut == null) {
@@ -287,7 +287,7 @@ class _AddVisitorState extends State<AddVisitor> {
                   flatno,
                   purpose,
                   selectedTimeIn.format(context),
-                  selectedTimeOut.format(context),
+                  selectedTimeOut!.format(context),
                 );
               }
             }

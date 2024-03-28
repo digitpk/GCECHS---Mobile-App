@@ -23,19 +23,20 @@ class ShowResidents extends StatelessWidget {
             return Loading();
           }
           return ListView(
-            children: snapshot.data.docs
+            children: snapshot.data!.docs
                 .map((DocumentSnapshot<Map<String, dynamic>> document) {
               return ListTile(
-                title: Text(document.data()['name']),
-                subtitle: Text(
-                    document.data()['wing'] + ' ' + document.data()['flatno']),
+                title: Text(document.data()!['name']),
+                subtitle: Text(document.data()!['wing'] +
+                    ' ' +
+                    document.data()!['flatno']),
                 onTap: () {
                   Navigator.pop(context, [
                     document.id,
-                    document.data()['name'],
-                    document.data()['phone_no'],
-                    document.data()['wing'],
-                    document.data()['flatno']
+                    document.data()!['name'],
+                    document.data()!['phone_no'],
+                    document.data()!['wing'],
+                    document.data()!['flatno']
                   ]);
                 },
               );
