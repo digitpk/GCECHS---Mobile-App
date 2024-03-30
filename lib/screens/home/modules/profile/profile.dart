@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:housingsociety/models/user.dart';
@@ -11,9 +13,8 @@ import 'package:housingsociety/screens/home/modules/profile/reusableprofiletile.
 import 'package:housingsociety/services/storage.dart';
 import 'package:housingsociety/shared/constants.dart';
 import 'package:housingsociety/shared/loading.dart';
-import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
+import 'package:provider/provider.dart';
 
 class Profile extends StatefulWidget {
   static const String id = 'profile';
@@ -22,26 +23,45 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  File profileImage;
+  File? profileImage;
   final picker = ImagePicker();
   bool loading = false;
   StorageService storage = StorageService();
 
-  Future getImage(source, uid) async {
-    final pickedFile = await picker.getImage(
+  Future getImage(ImageSource source, String uid) async {
+    final pickedFile = await picker.pickImage(
       source: source,
       imageQuality: 50,
     );
-    String profileImagePath;
 
-    setState(() {
-      if (pickedFile != null) {
+    if (pickedFile != null) {
+      String profileImagePath = pickedFile.path;
+
+      // Show any UI to let the user confirm or adjust the image if needed
+      // Then upload the image to storage
+      await storage.uploadProfilePicture(profileImagePath, uid);
+
+      setState(() {
         profileImage = File(pickedFile.path);
-        profileImagePath = pickedFile.path;
-        storage.uploadProfilePicture(profileImagePath, uid);
-      }
-    });
+      });
+    }
   }
+
+  // Future getImage(source, uid) async {
+  //   final pickedFile = await picker.getImage(
+  //     source: source,
+  //     imageQuality: 50,
+  //   );
+  //   String profileImagePath;
+  //
+  //   setState(() {
+  //     if (pickedFile != null) {
+  //       profileImage = File(pickedFile.path);
+  //       profileImagePath = pickedFile.path;
+  //       storage.uploadProfilePicture(profileImagePath, uid);
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -72,10 +92,15 @@ class _ProfileState extends State<Profile> {
                       child: CircleAvatar(
                         radius: 65.0,
                         //backgroundColor: Colors.white,
-                        backgroundImage: snapshot.data['profile_picture'] == ''
-                            ? AssetImage(
-                                'assets/images/default_profile_pic.jpg')
-                            : NetworkImage(snapshot.data['profile_picture']),
+                        backgroundImage: snapshot.data != null &&
+                                snapshot.data!['profile_picture'] != null &&
+                                snapshot.data!['profile_picture'] != ''
+                            ? NetworkImage(
+                                snapshot.data!['profile_picture'] as String)
+                            : AssetImage(
+                                    'assets/images/default_profile_pic.jpg')
+                                as ImageProvider<Object>?,
+
                         child: Align(
                           alignment: Alignment.bottomRight,
                           child: Container(
@@ -102,8 +127,8 @@ class _ProfileState extends State<Profile> {
                                             leading: Icon(Icons.camera_alt),
                                             title: Text('Choose from Camera'),
                                             onTap: () {
-                                              getImage(
-                                                  ImageSource.camera, user.uid);
+                                              getImage(ImageSource.camera,
+                                                  user.uid!);
                                               Navigator.pop(context);
                                             },
                                           ),
@@ -113,7 +138,7 @@ class _ProfileState extends State<Profile> {
                                             title: Text('Choose from gallery'),
                                             onTap: () {
                                               getImage(ImageSource.gallery,
-                                                  user.uid);
+                                                  user.uid!);
                                               Navigator.pop(context);
                                             },
                                           )
@@ -134,21 +159,21 @@ class _ProfileState extends State<Profile> {
                     ReusableProfileTile(
                       label: 'Name',
                       //value: AuthService().userName(),
-                      value: user.name,
+                      value: user.name!,
                       onpress: () {
                         Navigator.pushNamed(context, EditName.id);
                       },
                     ),
                     ReusableProfileTile(
                       label: 'Email',
-                      value: user.email,
+                      value: user.email!,
                       onpress: () {
                         Navigator.pushNamed(context, EditEmail.id);
                       },
                     ),
                     ReusableProfileTile(
                       label: 'Phone',
-                      value: snapshot.data['phone_no'],
+                      value: snapshot.data!['phone_no'],
                       onpress: () {
                         Navigator.pushNamed(context, EditPhoneNumber.id);
                       },
@@ -162,15 +187,15 @@ class _ProfileState extends State<Profile> {
                     ),
                     ReusableProfileTile(
                       label: 'Flat no',
-                      value: snapshot.data['wing'] +
+                      value: snapshot.data!['wing'] +
                           '  ' +
-                          snapshot.data['flatno'],
+                          snapshot.data!['flatno'],
                       onpress: () {
                         Navigator.pushNamed(context, EditFlat.id);
                       },
                     ),
                     Visibility(
-                      visible: snapshot.data['userType'] == 'admin',
+                      visible: snapshot.data!['userType'] == 'admin',
                       child: ReusableProfileTile(
                         label: 'Manage Residents',
                         value: '',

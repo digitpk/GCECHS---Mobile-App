@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:housingsociety/shared/constants.dart';
 import 'package:housingsociety/services/auth.dart';
+import 'package:housingsociety/shared/constants.dart';
 import 'package:housingsociety/shared/loading.dart';
 import 'package:housingsociety/shared/snackbarpage.dart';
 
 class Register extends StatefulWidget {
-  final Function toggle;
+  final Function? toggle;
   Register({this.toggle});
 
   @override
@@ -16,7 +16,7 @@ class _RegisterState extends State<Register> {
   final AuthService _auth = AuthService();
   final _formkey = GlobalKey<FormState>();
 
-  String _email, _password, name, flatno;
+  String? _email, _password, name, flatno;
   String wing = '';
   bool buttonEnabled = false;
   bool obscureText = true;
@@ -71,7 +71,7 @@ class _RegisterState extends State<Register> {
                               });
                             },
                             validator: (val) {
-                              return val.isEmpty
+                              return val!.isEmpty
                                   ? 'Name cannot be empty'
                                   : null;
                             },
@@ -105,7 +105,9 @@ class _RegisterState extends State<Register> {
                                     flatno = val;
                                   },
                                   validator: (val) {
-                                    return val.isEmpty ? 'Enter flat no' : null;
+                                    return val!.isEmpty
+                                        ? 'Enter flat no'
+                                        : null;
                                   },
                                   decoration: InputDecoration(
                                     labelText: 'Flat no.',
@@ -125,7 +127,7 @@ class _RegisterState extends State<Register> {
                               });
                             },
                             validator: (val) {
-                              return val.isEmpty ? 'Enter an email' : null;
+                              return val!.isEmpty ? 'Enter an email' : null;
                             },
                             decoration: InputDecoration(
                               labelText: 'Email ID',
@@ -143,7 +145,7 @@ class _RegisterState extends State<Register> {
                               });
                             },
                             validator: (val) {
-                              return val.length < 4
+                              return val!.length < 4
                                   ? 'Password must be minimum of 4 characters'
                                   : null;
                             },
@@ -169,13 +171,13 @@ class _RegisterState extends State<Register> {
                                 primary: kAmaranth,
                               ),
                               onPressed: () async {
-                                if (_formkey.currentState.validate()) {
+                                if (_formkey.currentState!.validate()) {
                                   setState(() {
                                     loading = true;
                                   });
                                   dynamic result = await _auth
-                                      .createUserWithEmailAndPassword(_email,
-                                          _password, name, wing, flatno);
+                                      .createUserWithEmailAndPassword(_email!,
+                                          _password!, name!, wing, flatno!);
                                   if (result == null) {
                                     setState(() {
                                       loading = false;
@@ -192,7 +194,7 @@ class _RegisterState extends State<Register> {
                           ),
                           TextButton(
                             onPressed: () {
-                              widget.toggle();
+                              widget.toggle!();
                             },
                             child: Text(
                               'Already have an account?',

@@ -22,7 +22,7 @@ class RealTimeVisitorUpdate extends StatelessWidget {
           return Loading();
         }
         return ListView(
-          children: snapshot.data.docs
+          children: snapshot.data!.docs
               .map((DocumentSnapshot<Map<String, dynamic>> document) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
@@ -41,7 +41,7 @@ class RealTimeVisitorUpdate extends StatelessWidget {
                         Icons.perm_identity,
                         color: kMediumAquamarine,
                       ),
-                      title: Text(document.data()['name']),
+                      title: Text(document.data()!['name']),
                       trailing: PopupMenuButton(
                         itemBuilder: (BuildContext context) => [
                           PopupMenuItem(
@@ -56,25 +56,25 @@ class RealTimeVisitorUpdate extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => AddVisitor(
-                                      name: document.data()['name'],
-                                      wing: document.data()['wing'],
-                                      flatno: document.data()['flatno'],
-                                      purpose: document.data()['purpose'],
-                                      mobileNo: document.data()['mobileNo'],
+                                      name: document.data()!['name'],
+                                      wing: document.data()!['wing'],
+                                      flatno: document.data()!['flatno'],
+                                      purpose: document.data()!['purpose'],
+                                      mobileNo: document.data()!['mobileNo'],
                                       selectedTimeIn: TimeOfDay(
-                                        hour: ((document.data()['inTime'])
+                                        hour: ((document.data()!['inTime'])
                                                         .split(':')[1])
                                                     .split(' ')[1] ==
                                                 'PM'
                                             ? 12 +
                                                 int.parse(
-                                                    (document.data()['inTime'])
+                                                    (document.data()!['inTime'])
                                                         .split(':')[0])
                                             : int.parse(
-                                                (document.data()['inTime'])
+                                                (document.data()!['inTime'])
                                                     .split(':')[0]),
                                         minute: int.parse(
-                                            ((document.data()['inTime'])
+                                            ((document.data()!['inTime'])
                                                     .split(':')[1])
                                                 .split(' ')[0]),
                                       ),
@@ -108,11 +108,11 @@ class RealTimeVisitorUpdate extends StatelessWidget {
                         color: kMediumAquamarine,
                       ),
                       title: Text(
-                        document.data()['mobileNo'],
+                        document.data()!['mobileNo'],
                         style: TextStyle(color: kMediumAquamarine),
                       ),
                       onTap: () {
-                        launch("tel://" + document.data()['mobileNo']);
+                        launch("tel://" + document.data()!['mobileNo']);
                       },
                     ),
                     ListTile(
@@ -121,9 +121,9 @@ class RealTimeVisitorUpdate extends StatelessWidget {
                         Icons.apartment,
                         color: kMediumAquamarine,
                       ),
-                      title: Text(document.data()['wing'] +
+                      title: Text(document.data()!['wing'] +
                           ' ' +
-                          document.data()['flatno']),
+                          document.data()!['flatno']),
                     ),
                     ListTile(
                       visualDensity: VisualDensity(vertical: -4),
@@ -131,7 +131,7 @@ class RealTimeVisitorUpdate extends StatelessWidget {
                         Icons.work,
                         color: kMediumAquamarine,
                       ),
-                      title: Text(document.data()['purpose']),
+                      title: Text(document.data()!['purpose']),
                     ),
                     Row(
                       children: [
@@ -141,7 +141,7 @@ class RealTimeVisitorUpdate extends StatelessWidget {
                               Icons.access_time,
                               color: kMediumAquamarine,
                             ),
-                            title: Text('In:  ' + document.data()['inTime']),
+                            title: Text('In:  ' + document.data()!['inTime']),
                           ),
                         ),
                         Expanded(
@@ -150,16 +150,16 @@ class RealTimeVisitorUpdate extends StatelessWidget {
                               Icons.access_time,
                               color: kMediumAquamarine,
                             ),
-                            title: Text('Out:  ' + document.data()['outTime']),
+                            title: Text('Out:  ' + document.data()!['outTime']),
                           ),
                         ),
                       ],
                     ),
                     Text(
-                      document.data()['timestamp'].toDate().day.toString() +
+                      document.data()!['timestamp'].toDate().day.toString() +
                           ' / ' +
                           document
-                              .data()['timestamp']
+                              .data()!['timestamp']
                               .toDate()
                               .month
                               .toString(),

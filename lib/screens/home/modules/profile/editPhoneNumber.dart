@@ -11,7 +11,7 @@ class EditPhoneNumber extends StatefulWidget {
 
 class _EditPhoneNumberState extends State<EditPhoneNumber> {
   String phoneNumber = '';
-  String verificationId;
+  String? verificationId;
 
   // Future<void> verifyPhoneNo() async{
 

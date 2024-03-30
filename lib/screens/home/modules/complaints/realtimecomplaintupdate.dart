@@ -1,16 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:housingsociety/shared/comments.dart';
-import 'package:housingsociety/services/database.dart';
-import 'package:housingsociety/shared/loading.dart';
-import 'package:housingsociety/shared/constants.dart';
 import 'package:housingsociety/models/user.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:provider/provider.dart';
 import 'package:housingsociety/services/auth.dart';
+import 'package:housingsociety/services/database.dart';
+import 'package:housingsociety/shared/comments.dart';
+import 'package:housingsociety/shared/constants.dart';
+import 'package:housingsociety/shared/loading.dart';
+// import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:provider/provider.dart';
 
 class RealTimeComplaintUpdate extends StatefulWidget {
-  final String complaintStatus;
+  final String? complaintStatus;
   RealTimeComplaintUpdate({this.complaintStatus});
 
   @override
@@ -21,10 +21,10 @@ class RealTimeComplaintUpdate extends StatefulWidget {
 class _RealTimeComplaintUpdateState extends State<RealTimeComplaintUpdate> {
   bool liked = false;
   DatabaseService db = DatabaseService();
-  Map<String, dynamic> likes;
+  Map<String, dynamic>? likes;
   dynamic userid = AuthService().userId();
-  String complaintstatus;
-  String userType;
+  String? complaintstatus;
+  String? userType;
   CollectionReference<Map<String, dynamic>> moduleComplaintUserLikes =
       FirebaseFirestore.instance.collection('module_complaint_user_likes');
   CollectionReference<Map<String, dynamic>> moduleComplaint =
@@ -49,7 +49,7 @@ class _RealTimeComplaintUpdateState extends State<RealTimeComplaintUpdate> {
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         setState(() {
-          likes = documentSnapshot.data();
+          likes = documentSnapshot.data() as Map<String, dynamic>?;
         });
       } else {
         setState(() {
@@ -81,7 +81,7 @@ class _RealTimeComplaintUpdateState extends State<RealTimeComplaintUpdate> {
                 return Loading();
               }
               return ListView(
-                children: snapshot.data.docs
+                children: snapshot.data!.docs
                     .map((DocumentSnapshot<Map<String, dynamic>> document) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(
@@ -102,7 +102,7 @@ class _RealTimeComplaintUpdateState extends State<RealTimeComplaintUpdate> {
                                   padding:
                                       const EdgeInsets.fromLTRB(16, 16, 0, 16),
                                   child: Text(
-                                    document.data()['username'],
+                                    document.data()!['username'],
                                     style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
@@ -141,7 +141,8 @@ class _RealTimeComplaintUpdateState extends State<RealTimeComplaintUpdate> {
                                                             onChanged: (value) {
                                                               setState(() {
                                                                 complaintstatus =
-                                                                    value;
+                                                                    value
+                                                                        as String;
                                                               });
                                                             },
                                                           ),
@@ -154,7 +155,8 @@ class _RealTimeComplaintUpdateState extends State<RealTimeComplaintUpdate> {
                                                             onChanged: (value) {
                                                               setState(() {
                                                                 complaintstatus =
-                                                                    value;
+                                                                    value
+                                                                        as String;
                                                               });
                                                             },
                                                           ),
@@ -167,7 +169,8 @@ class _RealTimeComplaintUpdateState extends State<RealTimeComplaintUpdate> {
                                                             onChanged: (value) {
                                                               setState(() {
                                                                 complaintstatus =
-                                                                    value;
+                                                                    value
+                                                                        as String;
                                                               });
                                                             },
                                                           ),
@@ -228,13 +231,13 @@ class _RealTimeComplaintUpdateState extends State<RealTimeComplaintUpdate> {
                                             });
                                       },
                                       child: Text(
-                                        (document.data()['status'])
+                                        (document.data()!['status'])
                                             .toUpperCase(),
                                         style: TextStyle(
-                                          color: document.data()['status'] ==
+                                          color: document.data()!['status'] ==
                                                   'open'
                                               ? Colors.green
-                                              : document.data()['status'] ==
+                                              : document.data()!['status'] ==
                                                       'on hold'
                                                   ? Colors.yellow
                                                   : Colors.red,
@@ -244,13 +247,13 @@ class _RealTimeComplaintUpdateState extends State<RealTimeComplaintUpdate> {
                                   : Padding(
                                       padding: const EdgeInsets.all(16.0),
                                       child: Text(
-                                        (document.data()['status'])
+                                        (document.data()!['status'])
                                             .toUpperCase(),
                                         style: TextStyle(
-                                          color: document.data()['status'] ==
+                                          color: document.data()!['status'] ==
                                                   'open'
                                               ? Colors.green
-                                              : document.data()['status'] ==
+                                              : document.data()!['status'] ==
                                                       'on hold'
                                                   ? Colors.yellow
                                                   : Colors.red,
@@ -278,7 +281,7 @@ class _RealTimeComplaintUpdateState extends State<RealTimeComplaintUpdate> {
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 16.0),
                             child: Text(
-                              document.data()['description'],
+                              document.data()!['description'],
                               style: TextStyle(
                                 fontSize: 16,
                               ),
@@ -294,24 +297,25 @@ class _RealTimeComplaintUpdateState extends State<RealTimeComplaintUpdate> {
                                         moduleComplaint,
                                         moduleComplaintUserLikes,
                                         document.id,
-                                        document.data()['likes'],
+                                        document.data()!['likes'],
                                         user.uid);
                                     DocumentSnapshot value =
                                         await moduleComplaintUserLikes
                                             .doc(userid)
                                             .get();
                                     setState(() {
-                                      likes = value.data();
+                                      likes =
+                                          value.data() as Map<String, dynamic>?;
                                     });
                                   },
                                   icon: Icon(
                                     Icons.thumb_up,
-                                    color: likes.containsKey(document.id)
+                                    color: likes!.containsKey(document.id)
                                         ? kAmaranth
                                         : Colors.white,
                                   ),
                                   label: Text(
-                                    document.data()['likes'].toString(),
+                                    document.data()!['likes'].toString(),
                                     style: TextStyle(color: Colors.white),
                                   ),
                                 ),
@@ -319,7 +323,8 @@ class _RealTimeComplaintUpdateState extends State<RealTimeComplaintUpdate> {
                               Expanded(
                                 child: TextButton.icon(
                                   onPressed: () {
-                                    showBarModalBottomSheet(
+                                    // showBarModalBottomSheet(
+                                    showModalBottomSheet(
                                       context: context,
                                       builder: (context) => Comments(
                                         docid: document.id,

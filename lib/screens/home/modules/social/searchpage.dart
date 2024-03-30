@@ -111,6 +111,7 @@ class _SearchPageState extends State<SearchPage> {
                 leading: CircleAvatar(
                   backgroundImage: user['profile_picture'] == ''
                       ? AssetImage('assets/images/default_profile_pic.jpg')
+                          as ImageProvider<Object>?
                       : NetworkImage(user['profile_picture']),
                 ),
                 title: Text(user['username']),

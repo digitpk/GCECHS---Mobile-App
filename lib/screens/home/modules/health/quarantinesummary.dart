@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:housingsociety/shared/constants.dart';
 import 'package:housingsociety/shared/loading.dart';
 
@@ -24,14 +24,14 @@ class QuarantineSummary extends StatelessWidget {
         }
 
         return ListView(
-          children: snapshot.data.docs
+          children: snapshot.data!.docs
               .map((DocumentSnapshot<Map<String, dynamic>> document) {
             return ListTile(
-              title: Text(document.data()['name']),
+              title: Text(document.data()!['name']),
               subtitle: Text(
-                  document.data()['wing'] + '  ' + document.data()['flatno']),
+                  document.data()!['wing'] + '  ' + document.data()!['flatno']),
               trailing: Text(
-                document.data()['health'],
+                document.data()!['health'],
                 style: TextStyle(
                   color: kAmaranth,
                 ),

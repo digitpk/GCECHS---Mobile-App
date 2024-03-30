@@ -13,8 +13,8 @@ class AddVoting extends StatefulWidget {
 
 class _AddVotingState extends State<AddVoting> {
   String title = '';
-  List timer;
-  DateTime dateAndTime;
+  List? timer;
+  DateTime? dateAndTime;
   Map<String, int> participants = {};
   List<DynamicParticipants> dynamicparticipants = [
     DynamicParticipants(),
@@ -72,7 +72,7 @@ class _AddVotingState extends State<AddVoting> {
                         showSnackBar(context, 'Set a timer');
                       } else {
                         DatabaseService()
-                            .addVoting(title, participants, dateAndTime);
+                            .addVoting(title, participants, dateAndTime!);
                         Navigator.pop(context);
                       }
                     },
@@ -154,7 +154,7 @@ class _AddVotingState extends State<AddVoting> {
                 Expanded(
                   child: TextButton(
                     onPressed: () async {
-                      DateTime date = await showDatePicker(
+                      DateTime? date = await showDatePicker(
                         context: context,
                         initialDate: DateTime.now(),
                         firstDate: DateTime(DateTime.now().year,
@@ -163,7 +163,7 @@ class _AddVotingState extends State<AddVoting> {
                       );
 
                       if (date != null) {
-                        TimeOfDay time = await showTimePicker(
+                        TimeOfDay? time = await showTimePicker(
                             context: context,
                             initialTime: TimeOfDay(
                                 hour: DateTime.now().hour,
@@ -181,7 +181,7 @@ class _AddVotingState extends State<AddVoting> {
 
                           print(dateAndTime);
 
-                          Duration difference = dateAndTime.difference(now);
+                          Duration difference = dateAndTime!.difference(now);
                           print(difference.toString().split(':'));
 
                           if (difference.isNegative) {
@@ -213,19 +213,14 @@ class _AddVotingState extends State<AddVoting> {
                 Visibility(
                   visible: timer != null,
                   child: Expanded(
-                    child: timer != null
-                        ? Center(
-                            child: Text(
-                              timer[0] +
-                                  'h ' +
-                                  timer[1] +
-                                  'm ' +
-                                  (timer[2]).split('.')[0] +
-                                  's ',
+                    child: Center(
+                      child: timer != null
+                          ? Text(
+                              '${timer![0]}h ${timer![1]}m ${(timer![2]).split('.')[0]}s',
                               style: TextStyle(fontSize: 18),
-                            ),
-                          )
-                        : null,
+                            )
+                          : Container(), // Provide an empty container when timer is null
+                    ),
                   ),
                 ),
               ],

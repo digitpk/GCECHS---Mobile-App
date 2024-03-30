@@ -12,7 +12,7 @@ class Visitor extends StatefulWidget {
 }
 
 class _VisitorState extends State<Visitor> {
-  String userType;
+  String? userType;
   int pageNumber = 0;
   @override
   void initState() {
@@ -150,11 +150,11 @@ class ReusbaleBottomNavBarChild extends StatelessWidget {
   ReusbaleBottomNavBarChild(
       {this.pageNumber, this.onpressed, this.iconData, this.label, this.color});
 
-  final int pageNumber;
-  final IconData iconData;
-  final Function onpressed;
-  final String label;
-  final Color color;
+  final int? pageNumber;
+  final IconData? iconData;
+  final Function()? onpressed;
+  final String? label;
+  final Color? color;
   @override
   Widget build(BuildContext context) {
     return TextButton.icon(
@@ -164,7 +164,7 @@ class ReusbaleBottomNavBarChild extends StatelessWidget {
           color: color,
         ),
         label: Text(
-          label,
+          label!,
           style: TextStyle(
             color: color,
           ),

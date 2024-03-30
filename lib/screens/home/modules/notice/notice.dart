@@ -12,7 +12,7 @@ class Notice extends StatefulWidget {
 }
 
 class _NoticeState extends State<Notice> {
-  String userType;
+  String? userType;
   String noticeType = 'notice';
   @override
   void initState() {

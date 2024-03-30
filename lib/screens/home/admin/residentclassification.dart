@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:housingsociety/models/user.dart';
 import 'package:housingsociety/services/database.dart';
 import 'package:housingsociety/shared/constants.dart';
@@ -7,7 +7,7 @@ import 'package:housingsociety/shared/loading.dart';
 import 'package:provider/provider.dart';
 
 class ResidentClassification extends StatelessWidget {
-  final String userType;
+  final String? userType;
   ResidentClassification({this.userType});
 
   @override
@@ -29,7 +29,7 @@ class ResidentClassification extends StatelessWidget {
           return Loading();
         }
         return ListView(
-          children: snapshot.data.docs
+          children: snapshot.data!.docs
               .map((DocumentSnapshot<Map<String, dynamic>> document) {
             return GestureDetector(
               onTap: document.id == user.uid
@@ -95,14 +95,16 @@ class ResidentClassification extends StatelessWidget {
                     },
               child: ListTile(
                 leading: CircleAvatar(
-                  backgroundImage: document.data()['profile_picture'] == ''
+                  backgroundImage: document.data()!['profile_picture'] == ''
                       ? AssetImage('assets/images/default_profile_pic.jpg')
-                      : NetworkImage(document.data()['profile_picture']),
+                          as ImageProvider<Object>
+                      : NetworkImage(
+                          document.data()!['profile_picture'] as String),
                 ),
-                title: Text(document.data()['name']),
-                subtitle: Text(document.data()['wing'] +
+                title: Text(document.data()!['name']),
+                subtitle: Text(document.data()!['wing'] +
                     ' - ' +
-                    document.data()['flatno']),
+                    document.data()!['flatno']),
               ),
             );
           }).toList(),

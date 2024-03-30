@@ -6,9 +6,9 @@ import 'package:housingsociety/shared/constants.dart';
 import 'package:provider/provider.dart';
 
 class UserProfilePage extends StatefulWidget {
-  final String uid;
-  final String username;
-  final bool following;
+  final String? uid;
+  final String? username;
+  final bool? following;
 
   UserProfilePage({this.uid, this.username, this.following});
 
@@ -17,7 +17,7 @@ class UserProfilePage extends StatefulWidget {
 }
 
 class _UserProfilePageState extends State<UserProfilePage> {
-  bool togglefollowing;
+  bool? togglefollowing;
   @override
   void initState() {
     super.initState();
@@ -29,7 +29,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
     final user = Provider.of<CurrentUser>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.username),
+        title: Text(widget.username!),
         actions: [
           TextButton(
               child: togglefollowing == true
@@ -43,10 +43,10 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     ),
               onPressed: () {
                 setState(() {
-                  togglefollowing = !togglefollowing;
+                  togglefollowing = !togglefollowing!;
                 });
 
-                DatabaseService().followUser(user.uid, widget.uid);
+                DatabaseService().followUser(user.uid!, widget.uid!);
               }),
         ],
       ),

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:housingsociety/models/user.dart';
-import 'package:housingsociety/shared/realtimecommentsupdate.dart';
 import 'package:housingsociety/services/database.dart';
 import 'package:housingsociety/shared/constants.dart';
+import 'package:housingsociety/shared/realtimecommentsupdate.dart';
 import 'package:provider/provider.dart';
 
 class Comments extends StatefulWidget {
   final docid;
-  final bool social;
+  final bool? social;
 
   Comments({this.docid, this.social});
 
@@ -33,7 +33,7 @@ class _CommentsState extends State<Comments> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<CurrentUser>(context);
-    String comment;
+    String? comment;
     var _textController = TextEditingController();
     return Container(
       color: kSpaceCadet,
@@ -84,7 +84,7 @@ class _CommentsState extends State<Comments> {
                     onPressed: () {
                       _textController.clear();
 
-                      db.addComment(widget.social, widget.docid, user.name,
+                      db.addComment(widget.social!, widget.docid, user.name,
                           comment, userNameSocial);
                     },
                     icon: Icon(Icons.send),

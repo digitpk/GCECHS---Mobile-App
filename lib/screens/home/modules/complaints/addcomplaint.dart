@@ -10,8 +10,8 @@ class AddComplaint extends StatefulWidget {
 }
 
 class _AddComplaintState extends State<AddComplaint> {
-  String title;
-  String description;
+  String? title;
+  String? description;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

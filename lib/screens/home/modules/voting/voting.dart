@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:housingsociety/screens/home/modules/voting/addvoting.dart';
 import 'package:housingsociety/screens/home/modules/voting/realtimevotingupdate.dart';
-import 'package:housingsociety/shared/constants.dart';
 import 'package:housingsociety/services/database.dart';
+import 'package:housingsociety/shared/constants.dart';
 
 class Voting extends StatefulWidget {
   static const String id = 'voting';
@@ -13,7 +13,7 @@ class Voting extends StatefulWidget {
 
 class _VotingState extends State<Voting> {
   dynamic userdata;
-  String userType;
+  String? userType;
 
   @override
   void initState() {

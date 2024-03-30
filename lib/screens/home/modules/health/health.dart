@@ -29,9 +29,9 @@ class _HealthState extends State<Health> {
   void getInitialstatus() async {
     DocumentSnapshot<Map<String, dynamic>> result =
         await db.readIndividualHealthStatus(_auth.userId());
-    if (result.data()['health'] != null) {
+    if (result.data()!['health'] != null) {
       setState(() {
-        groupvalue = result.data()['health'];
+        groupvalue = result.data()!['health'];
       });
     }
   }
@@ -59,7 +59,7 @@ class _HealthState extends State<Health> {
                   groupValue: groupvalue,
                   onChanged: (value) {
                     setState(() {
-                      groupvalue = value;
+                      groupvalue = value as String;
                     });
                   },
                 ),
@@ -69,7 +69,7 @@ class _HealthState extends State<Health> {
                   groupValue: groupvalue,
                   onChanged: (value) {
                     setState(() {
-                      groupvalue = value;
+                      groupvalue = value as String;
                     });
                   },
                 ),
@@ -79,7 +79,7 @@ class _HealthState extends State<Health> {
                   groupValue: groupvalue,
                   onChanged: (value) {
                     setState(() {
-                      groupvalue = value;
+                      groupvalue = value as String;
                     });
                   },
                 ),

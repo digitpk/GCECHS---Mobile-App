@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:housingsociety/screens/home/modules/notice/translation.dart';
 
 class ReusableFlatButton extends StatelessWidget {
-  final String outputLanguage;
-  final String title;
-  final String notice;
+  final String? outputLanguage;
+  final String? title;
+  final String? notice;
 
   ReusableFlatButton({this.outputLanguage, this.title, this.notice});
 
@@ -16,14 +16,14 @@ class ReusableFlatButton extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (BuildContext context) => Translate(
-              notice: notice,
-              title: title,
-              outputLanguage: outputLanguage,
+              notice: notice!,
+              title: title!,
+              outputLanguage: outputLanguage!,
             ),
           ),
         );
       },
-      child: Text(outputLanguage),
+      child: Text(outputLanguage!),
     );
   }
 }

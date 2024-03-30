@@ -1,14 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:housingsociety/screens/home/modules/notice/addnotice.dart';
+import 'package:housingsociety/screens/home/modules/notice/reusableflatbutton.dart';
 import 'package:housingsociety/services/database.dart';
 import 'package:housingsociety/shared/constants.dart';
 import 'package:housingsociety/shared/loading.dart';
-import 'package:flutter_tts/flutter_tts.dart';
-import 'package:housingsociety/screens/home/modules/notice/reusableflatbutton.dart';
 
 class RealTimeNoticeUpdate extends StatefulWidget {
-  final String noticeType;
+  final String? noticeType;
   RealTimeNoticeUpdate({this.noticeType});
   @override
   _RealTimeNoticeUpdateState createState() => _RealTimeNoticeUpdateState();
@@ -19,8 +19,8 @@ enum TtsState { playing, stopped, paused, continued }
 class _RealTimeNoticeUpdateState extends State<RealTimeNoticeUpdate> {
   FlutterTts flutterTts = FlutterTts();
   TtsState ttsState = TtsState.stopped;
-  String currentPlayingDocId;
-  String userType;
+  String? currentPlayingDocId;
+  String? userType;
   Future _speak(String notice, String docid) async {
     print(flutterTts.getLanguages);
     await flutterTts.setLanguage("hi-IN");
@@ -71,9 +71,9 @@ class _RealTimeNoticeUpdateState extends State<RealTimeNoticeUpdate> {
             return Loading();
           }
           return ListView(
-            children: snapshot.data.docs
+            children: snapshot.data!.docs
                 .map((DocumentSnapshot<Map<String, dynamic>> document) {
-              Timestamp timestamp = document.data()['timestamp'];
+              Timestamp timestamp = document.data()!['timestamp'];
               DateTime dateTime = timestamp.toDate();
 
               return Padding(
@@ -85,8 +85,8 @@ class _RealTimeNoticeUpdateState extends State<RealTimeNoticeUpdate> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => AddNotice(
-                          editTitle: document.data()['title'],
-                          editNotice: document.data()['notice'],
+                          editTitle: document.data()!['title'],
+                          editNotice: document.data()!['notice'],
                           flag: 0,
                           docid: document.id,
                         ),
@@ -109,7 +109,7 @@ class _RealTimeNoticeUpdateState extends State<RealTimeNoticeUpdate> {
                                 padding:
                                     const EdgeInsets.fromLTRB(16, 16, 0, 16),
                                 child: Text(
-                                  document.data()['title'],
+                                  document.data()!['title'],
                                   style: TextStyle(
                                     fontSize: 22,
                                     fontWeight: FontWeight.bold,
@@ -173,89 +173,89 @@ class _RealTimeNoticeUpdateState extends State<RealTimeNoticeUpdate> {
                                                                         outputLanguage:
                                                                             'Bengali',
                                                                         title: document
-                                                                            .data()['title'],
+                                                                            .data()!['title'],
                                                                         notice:
-                                                                            document.data()['notice'],
+                                                                            document.data()!['notice'],
                                                                       ),
                                                                       ReusableFlatButton(
                                                                         outputLanguage:
                                                                             'English',
                                                                         title: document
-                                                                            .data()['title'],
+                                                                            .data()!['title'],
                                                                         notice:
-                                                                            document.data()['notice'],
+                                                                            document.data()!['notice'],
                                                                       ),
                                                                       ReusableFlatButton(
                                                                         outputLanguage:
                                                                             'Gujarati',
                                                                         title: document
-                                                                            .data()['title'],
+                                                                            .data()!['title'],
                                                                         notice:
-                                                                            document.data()['notice'],
+                                                                            document.data()!['notice'],
                                                                       ),
                                                                       ReusableFlatButton(
                                                                         outputLanguage:
                                                                             'Hindi',
                                                                         title: document
-                                                                            .data()['title'],
+                                                                            .data()!['title'],
                                                                         notice:
-                                                                            document.data()['notice'],
+                                                                            document.data()!['notice'],
                                                                       ),
                                                                       ReusableFlatButton(
                                                                         outputLanguage:
                                                                             'Kannada',
                                                                         title: document
-                                                                            .data()['title'],
+                                                                            .data()!['title'],
                                                                         notice:
-                                                                            document.data()['notice'],
+                                                                            document.data()!['notice'],
                                                                       ),
                                                                       ReusableFlatButton(
                                                                         outputLanguage:
                                                                             'Malayalam',
                                                                         title: document
-                                                                            .data()['title'],
+                                                                            .data()!['title'],
                                                                         notice:
-                                                                            document.data()['notice'],
+                                                                            document.data()!['notice'],
                                                                       ),
                                                                       ReusableFlatButton(
                                                                         outputLanguage:
                                                                             'Marathi',
                                                                         title: document
-                                                                            .data()['title'],
+                                                                            .data()!['title'],
                                                                         notice:
-                                                                            document.data()['notice'],
+                                                                            document.data()!['notice'],
                                                                       ),
                                                                       ReusableFlatButton(
                                                                         outputLanguage:
                                                                             'Punjabi',
                                                                         title: document
-                                                                            .data()['title'],
+                                                                            .data()!['title'],
                                                                         notice:
-                                                                            document.data()['notice'],
+                                                                            document.data()!['notice'],
                                                                       ),
                                                                       ReusableFlatButton(
                                                                         outputLanguage:
                                                                             'Sindhi',
                                                                         title: document
-                                                                            .data()['title'],
+                                                                            .data()!['title'],
                                                                         notice:
-                                                                            document.data()['notice'],
+                                                                            document.data()!['notice'],
                                                                       ),
                                                                       ReusableFlatButton(
                                                                         outputLanguage:
                                                                             'Tamil',
                                                                         title: document
-                                                                            .data()['title'],
+                                                                            .data()!['title'],
                                                                         notice:
-                                                                            document.data()['notice'],
+                                                                            document.data()!['notice'],
                                                                       ),
                                                                       ReusableFlatButton(
                                                                         outputLanguage:
                                                                             'Telugu',
                                                                         title: document
-                                                                            .data()['title'],
+                                                                            .data()!['title'],
                                                                         notice:
-                                                                            document.data()['notice'],
+                                                                            document.data()!['notice'],
                                                                       ),
                                                                     ],
                                                                   ),
@@ -281,10 +281,10 @@ class _RealTimeNoticeUpdateState extends State<RealTimeNoticeUpdate> {
                                                   child: ListTile(
                                                     onTap: () {
                                                       _speak(
-                                                          document.data()[
+                                                          document.data()![
                                                                   'title'] +
                                                               '  ' +
-                                                              document.data()[
+                                                              document.data()![
                                                                   'notice'],
                                                           document.id);
                                                       Navigator.pop(context);
@@ -338,7 +338,7 @@ class _RealTimeNoticeUpdateState extends State<RealTimeNoticeUpdate> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16.0),
                           child: Text(
-                            document.data()['notice'],
+                            document.data()!['notice'],
                             style: TextStyle(
                               fontSize: 16,
                             ),

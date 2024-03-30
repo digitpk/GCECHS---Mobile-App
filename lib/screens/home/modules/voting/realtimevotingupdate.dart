@@ -4,8 +4,8 @@ import 'package:housingsociety/services/auth.dart';
 import 'package:housingsociety/services/database.dart';
 import 'package:housingsociety/shared/constants.dart';
 import 'package:housingsociety/shared/loading.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import 'package:intl/intl.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class RealTimeVotingUpdate extends StatefulWidget {
   @override
@@ -15,7 +15,7 @@ class RealTimeVotingUpdate extends StatefulWidget {
 class _RealTimeVotingUpdateState extends State<RealTimeVotingUpdate> {
   dynamic result;
   int totalVotes = 0;
-  String userType;
+  String? userType;
 
   @override
   void initState() {
@@ -48,7 +48,7 @@ class _RealTimeVotingUpdateState extends State<RealTimeVotingUpdate> {
         }
 
         return ListView(
-          children: snapshot.data.docs
+          children: snapshot.data!.docs
               .map((DocumentSnapshot<Map<String, dynamic>> document) {
             // voteStatus(document.id);
             List<Widget> participants = [
@@ -59,7 +59,7 @@ class _RealTimeVotingUpdateState extends State<RealTimeVotingUpdate> {
                       text: TextSpan(children: [
                         TextSpan(text: 'Cast your vote for the position: '),
                         TextSpan(
-                          text: document.data()['title'],
+                          text: document.data()!['title'],
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontStyle: FontStyle.italic,
@@ -91,16 +91,16 @@ class _RealTimeVotingUpdateState extends State<RealTimeVotingUpdate> {
               ),
             ];
 
-            (document.data()['participants']).forEach((participant, vote) {
+            (document.data()!['participants']).forEach((participant, vote) {
               try {
-                result = document.data()['users'][AuthService().userId()];
-                totalVotes = document.data()['users'].length;
+                result = document.data()!['users'][AuthService().userId()];
+                totalVotes = document.data()!['users'].length;
               } on NoSuchMethodError {
                 totalVotes = 0;
                 result = null;
               }
               participants.add(
-                timestamp.compareTo(document.data()['timer']) > 0 ||
+                timestamp.compareTo(document.data()!['timer']) > 0 ||
                         result == true
                     ? Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -175,9 +175,9 @@ class _RealTimeVotingUpdateState extends State<RealTimeVotingUpdate> {
                   ? Row(
                       children: [
                         Expanded(child: Text(totalVotes.toString() + ' vote')),
-                        document.data()['timer'] != null
+                        document.data()!['timer'] != null
                             ? Text(
-                                'Ends on ${DateFormat('dd/MM/yy H:m').format((document.data()['timer']).toDate())}')
+                                'Ends on ${DateFormat('dd/MM/yy H:m').format((document.data()!['timer']).toDate())}')
                             : SizedBox(
                                 width: 0,
                               )
@@ -186,9 +186,9 @@ class _RealTimeVotingUpdateState extends State<RealTimeVotingUpdate> {
                   : Row(
                       children: [
                         Expanded(child: Text(totalVotes.toString() + ' votes')),
-                        document.data()['timer'] != null
+                        document.data()!['timer'] != null
                             ? Text(
-                                'Ends on ${DateFormat('dd/M/yy H:m').format((document.data()['timer']).toDate())}')
+                                'Ends on ${DateFormat('dd/M/yy H:m').format((document.data()!['timer']).toDate())}')
                             : SizedBox(
                                 width: 0,
                               )
