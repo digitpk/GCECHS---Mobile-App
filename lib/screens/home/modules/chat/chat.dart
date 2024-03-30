@@ -30,10 +30,13 @@ class _ChatState extends State<Chat> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Expanded(
-              child: RealtimeChatUpdate(),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: RealtimeChatUpdate(),
+              ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
                 children: [
                   Expanded(
@@ -44,6 +47,24 @@ class _ChatState extends State<Chat> {
                         message = val;
                       },
                       decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          color: kAmaranth,
+                          onPressed: () {
+                            message != null
+                                ? db.addMessage(
+                                    message,
+                                    user.name ?? AuthService().userName(),
+                                    // user.name == null
+                                    //     ? AuthService().userName()
+                                    //     : user.uid,
+
+                                    user.email,
+                                    Timestamp.now())
+                                : print('null');
+                            _textController.clear();
+                          },
+                          icon: Icon(Icons.send),
+                        ),
                         // prefixIcon: IconButton(
                         //   onPressed: () {},
                         //   icon: Icon(
@@ -62,22 +83,23 @@ class _ChatState extends State<Chat> {
                       ),
                     ),
                   ),
-                  Expanded(
-                    child: IconButton(
-                      color: kAmaranth,
-                      onPressed: () {
-                        message != null
-                            ? db.addMessage(
-                                message,
-                                user.name ?? AuthService().userName(),
-                                user.email,
-                                Timestamp.now())
-                            : print('null');
-                        _textController.clear();
-                      },
-                      icon: Icon(Icons.send),
-                    ),
-                  )
+                  // Expanded(
+                  //   child: IconButton(
+                  //     color: kAmaranth,
+                  //     onPressed: () {
+                  //       message != null
+                  //           ? db.addMessage(
+                  //               message,
+                  //               user.name ?? AuthService().userName(),
+                  //               // user.name,
+                  //               user.email,
+                  //               Timestamp.now())
+                  //           : print('null');
+                  //       _textController.clear();
+                  //     },
+                  //     icon: Icon(Icons.send),
+                  //   ),
+                  // )
                 ],
               ),
             ),

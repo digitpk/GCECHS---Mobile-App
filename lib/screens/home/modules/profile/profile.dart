@@ -10,6 +10,7 @@ import 'package:housingsociety/screens/home/modules/profile/editPassword.dart';
 import 'package:housingsociety/screens/home/modules/profile/editPhoneNumber.dart';
 import 'package:housingsociety/screens/home/modules/profile/editflat.dart';
 import 'package:housingsociety/screens/home/modules/profile/reusableprofiletile.dart';
+import 'package:housingsociety/services/auth.dart';
 import 'package:housingsociety/services/storage.dart';
 import 'package:housingsociety/shared/constants.dart';
 import 'package:housingsociety/shared/loading.dart';
@@ -158,8 +159,9 @@ class _ProfileState extends State<Profile> {
                     ),
                     ReusableProfileTile(
                       label: 'Name',
-                      //value: AuthService().userName(),
-                      value: user.name!,
+                      // value: AuthService().userName(),
+                      // value: user.name!,
+                      value: snapshot.data!['name'],
                       onpress: () {
                         Navigator.pushNamed(context, EditName.id);
                       },
@@ -204,55 +206,67 @@ class _ProfileState extends State<Profile> {
                         },
                       ),
                     ),
-                    // Row(
-                    //   children: [
-                    //     Padding(
-                    //       padding: const EdgeInsets.all(8.0),
-                    //       child: TextButton(
-                    //         onPressed: () {
-                    //           showDialog(
-                    //               context: context,
-                    //               builder: (BuildContext context) {
-                    //                 return AlertDialog(
-                    //                   backgroundColor: kOxfordBlue,
-                    //                   content: Text(
-                    //                     'Are you sure you want to delte your account ? This action is irreversible.',
-                    //                     style: TextStyle(
-                    //                         fontWeight: FontWeight.bold),
-                    //                   ),
-                    //                   actions: [
-                    //                     TextButton(
-                    //                         onPressed: () {
-                    //                           Navigator.pop(context);
-                    //                         },
-                    //                         child: Text(
-                    //                           'No',
-                    //                           style:
-                    //                               TextStyle(color: kAmaranth),
-                    //                         )),
-                    //                     ElevatedButton(
-                    //                         style: ElevatedButton.styleFrom(
-                    //                           primary: kAmaranth,
-                    //                         ),
-                    //                         onPressed: () {
-                    //                           AuthService().delteAccount();
-                    //                         },
-                    //                         child: Text('Delete')),
-                    //                   ],
-                    //                 );
-                    //               });
-                    //         },
-                    //         child: Text(
-                    //           'Delete account',
-                    //           style: TextStyle(
-                    //             color: Colors.red,
-                    //             fontSize: 18.0,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextButton(
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      backgroundColor: kOxfordBlue,
+                                      content: Text(
+                                        'Are you sure you want\nto delete your account?\nThis action is irreversible.',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      actions: [
+                                        Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              TextButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Text(
+                                                    'No',
+                                                    style: TextStyle(
+                                                        color: kAmaranth),
+                                                  )),
+                                              ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                  primary: kAmaranth,
+                                                ),
+                                                onPressed: () {
+                                                  AuthService().delteAccount();
+                                                },
+                                                child: Center(
+                                                  child: Text('Delete'),
+                                                ),
+                                              ),
+                                            ]),
+                                      ],
+                                    );
+                                  });
+                            },
+                            child: Text(
+                              'Delete account',
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontSize: 18.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ],

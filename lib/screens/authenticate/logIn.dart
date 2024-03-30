@@ -137,7 +137,7 @@ class _LogInState extends State<LogIn> {
                           ),
                           TextButton(
                             onPressed: () {
-                              widget.toggle!();
+                              widget.toggle();
                             },
                             child: Text(
                               'Create a new account',

@@ -120,7 +120,7 @@ class _WrapperSocialState extends State<WrapperSocial> {
                 ),
                 BottomNavigationBarItem(
                   icon: CircleAvatar(
-                    backgroundImage: user.profilePicture == null
+                    backgroundImage: user.profilePicture != null
                         ? AssetImage('assets/images/default_profile_pic.jpg')
                             as ImageProvider<Object>?
                         : NetworkImage(user.profilePicture!),
