@@ -1,4 +1,4 @@
-package com.example.housingsociety
+package pk.digit.gcechs
 
 import io.flutter.embedding.android.FlutterActivity
 

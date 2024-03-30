@@ -22,8 +22,8 @@ class MyApp extends StatelessWidget {
     return StreamProvider<CurrentUser>.value(
       initialData:
           CurrentUser(uid: null, email: null, name: null, profilePicture: null),
-      value: AuthService()
-          .user, // Make sure AuthService().user returns Stream<CurrentUser>
+      // initialData: CurrentUser(uid: null, email: null, name: null, profilePicture: null),
+      value: AuthService().user,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData.dark().copyWith(

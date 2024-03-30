@@ -32,7 +32,7 @@ class DatabaseService {
   CollectionReference<Map<String, dynamic>> moduleSocialPhotosComments =
       FirebaseFirestore.instance.collection('module_social_photos_comments');
 
-  Future<void> addMessage(message, sender, email, Timestamp timestamp) {
+  Future<void>? addMessage(message, sender, email, Timestamp timestamp) {
     return moduleChat.add(
       {
         'message': message,

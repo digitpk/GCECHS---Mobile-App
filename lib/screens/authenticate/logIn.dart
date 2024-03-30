@@ -5,8 +5,8 @@ import 'package:housingsociety/shared/loading.dart';
 import 'package:housingsociety/shared/snackbarpage.dart';
 
 class LogIn extends StatefulWidget {
-  final Function? toggle;
-  LogIn({this.toggle});
+  final Function toggle;
+  LogIn({required this.toggle});
   @override
   _LogInState createState() => _LogInState();
 }
