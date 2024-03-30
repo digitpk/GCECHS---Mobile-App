@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:housingsociety/models/user.dart';
@@ -23,7 +24,7 @@ class WrapperSocial extends StatefulWidget {
 
 class _WrapperSocialState extends State<WrapperSocial> {
   int _selectedIndex = 0;
-  File photo;
+  File? photo;
   final picker = ImagePicker();
   StorageService storage = StorageService();
   String username = '';
@@ -50,7 +51,7 @@ class _WrapperSocialState extends State<WrapperSocial> {
     super.initState();
     moduleSocial.get().then((document) {
       setState(() {
-        username = document.data()['username'];
+        username = document.data()!['username'];
       });
     });
   }
@@ -77,7 +78,7 @@ class _WrapperSocialState extends State<WrapperSocial> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Loading();
           }
-          if (snapshot.data['username'] == '') {
+          if (snapshot.data!['username'] == '') {
             return SetUserName();
           }
           return Scaffold(
@@ -121,7 +122,8 @@ class _WrapperSocialState extends State<WrapperSocial> {
                   icon: CircleAvatar(
                     backgroundImage: user.profilePicture == null
                         ? AssetImage('assets/images/default_profile_pic.jpg')
-                        : NetworkImage(user.profilePicture),
+                            as ImageProvider<Object>?
+                        : NetworkImage(user.profilePicture!),
                     radius: 12,
                   ),
                   label: 'Profile',

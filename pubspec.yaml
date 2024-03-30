@@ -24,7 +24,7 @@ dependencies:
   firebase_storage:
   flutter_spinkit:
   provider:
-  modal_bottom_sheet:
+#  modal_bottom_sheet:
   image_picker:
   url_launcher:
   percent_indicator:

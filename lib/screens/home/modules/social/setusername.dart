@@ -56,7 +56,7 @@ class SetUserName extends StatelessWidget {
               if (doc.exists) {
                 showSnackbar('Username already exists');
               } else {
-                DatabaseService().setUserNameSocial(username, user.uid);
+                DatabaseService().setUserNameSocial(username, user.uid!);
               }
             });
           }

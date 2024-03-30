@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:housingsociety/screens/home/modules/contacts/addemergencycontact.dart';
 import 'package:housingsociety/services/database.dart';
 import 'package:housingsociety/shared/constants.dart';
@@ -23,7 +23,7 @@ class EmergencyContacts extends StatelessWidget {
           return Loading();
         }
         return ListView(
-          children: snapshot.data.docs
+          children: snapshot.data!.docs
               .map((DocumentSnapshot<Map<String, dynamic>> document) {
             return ListTile(
               onLongPress: () {
@@ -51,21 +51,22 @@ class EmergencyContacts extends StatelessWidget {
                     });
               },
               leading: CircleAvatar(
-                backgroundImage: document.data()['profile_picture'] == ''
+                backgroundImage: document.data()!['profile_picture'] == ''
                     ? AssetImage('assets/images/default_profile_pic.jpg')
-                    : NetworkImage(document.data()['profile_picture']),
+                        as ImageProvider<Object>?
+                    : NetworkImage(document.data()!['profile_picture']),
               ),
               title: Text(
-                document.data()['name'],
+                document.data()!['name'],
               ),
               subtitle: Text(
-                document.data()['address'],
+                document.data()!['address'],
               ),
               trailing: IconButton(
                 color: kAmaranth,
                 icon: Icon(Icons.call),
                 onPressed: () {
-                  launch("tel://" + document.data()['phone_no']);
+                  launch("tel://" + document.data()!['phone_no']);
                 },
               ),
               onTap: () {
@@ -73,10 +74,11 @@ class EmergencyContacts extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => AddEmergencyContact(
-                      currentName: document.data()['name'],
-                      currentPhone: document.data()['phone_no'],
-                      currentAddress: document.data()['address'],
-                      currentProfilePicture: document.data()['profile_picture'],
+                      currentName: document.data()!['name'],
+                      currentPhone: document.data()!['phone_no'],
+                      currentAddress: document.data()!['address'],
+                      currentProfilePicture:
+                          document.data()!['profile_picture'],
                       flag: 0,
                       docid: document.id,
                     ),

@@ -284,11 +284,18 @@ class DatabaseService {
     }
   }
 
-  Future<DocumentSnapshot> readIndividualHealthStatus(uid) {
-    // return userProfile.doc(uid).get();
-
-    return FirebaseFirestore.instance.collection('users').doc(uid).get();
+  Future<DocumentSnapshot<Map<String, dynamic>>> readIndividualHealthStatus(
+      userId) async {
+    // Replace this with your actual implementation
+    // For example:
+    return FirebaseFirestore.instance.collection('users').doc(userId).get();
   }
+
+  // Future<DocumentSnapshot> readIndividualHealthStatus(uid) {
+  //   // return userProfile.doc(uid).get();
+  //
+  //   return FirebaseFirestore.instance.collection('users').doc(uid).get();
+  // }
 
   Future addVisitor(name, mobileNo, wing, flatno, purpose, inTime, outTime) {
     return moduleVisitor.add({

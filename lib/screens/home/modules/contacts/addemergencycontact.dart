@@ -1,18 +1,19 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:housingsociety/screens/home/modules/contacts/contacts.dart';
 import 'package:housingsociety/services/database.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:housingsociety/shared/constants.dart';
-import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 class AddEmergencyContact extends StatefulWidget {
   static const String id = 'add_emergency_contact';
-  final String currentProfilePicture,
+  final String? currentProfilePicture,
       currentName,
       currentPhone,
       currentAddress,
       docid;
-  final int flag;
+  final int? flag;
   AddEmergencyContact(
       {this.currentProfilePicture,
       this.currentName,
@@ -25,13 +26,13 @@ class AddEmergencyContact extends StatefulWidget {
 }
 
 class _AddEmergencyContactState extends State<AddEmergencyContact> {
-  File profileImage;
+  File? profileImage;
   String profileImagePath = '';
   final picker = ImagePicker();
   String name = '', phoneNo = '', address = '';
   final formkey = GlobalKey<FormState>();
-  Future getImage(source) async {
-    final pickedFile = await picker.getImage(source: source);
+  Future<void> getImage(ImageSource source) async {
+    final pickedFile = await picker.pickImage(source: source);
 
     setState(() {
       if (pickedFile != null) {
@@ -45,9 +46,9 @@ class _AddEmergencyContactState extends State<AddEmergencyContact> {
   @override
   Widget build(BuildContext context) {
     if (widget.flag == 0) {
-      name = widget.currentName;
-      phoneNo = widget.currentPhone;
-      address = widget.currentAddress;
+      name = widget.currentName!;
+      phoneNo = widget.currentPhone!;
+      address = widget.currentAddress!;
     }
     return Scaffold(
       appBar: AppBar(
@@ -111,7 +112,7 @@ class _AddEmergencyContactState extends State<AddEmergencyContact> {
             visible: true,
             child: TextButton(
               onPressed: () async {
-                if (formkey.currentState.validate()) {
+                if (formkey.currentState!.validate()) {
                   await DatabaseService().addEmergencyContact(name, phoneNo,
                       address, profileImagePath, widget.flag, widget.docid);
                   Navigator.pop(context);
@@ -139,11 +140,12 @@ class _AddEmergencyContactState extends State<AddEmergencyContact> {
                     backgroundImage: widget.currentProfilePicture != '' &&
                             profileImage == null &&
                             widget.flag == 0
-                        ? NetworkImage(widget.currentProfilePicture)
+                        ? NetworkImage(widget.currentProfilePicture!)
                         : profileImage == null
                             ? AssetImage(
-                                'assets/images/default_profile_pic.jpg')
-                            : FileImage(profileImage),
+                                    'assets/images/default_profile_pic.jpg')
+                                as ImageProvider<Object>?
+                            : FileImage(profileImage!),
                     radius: 65,
                     child: Align(
                       alignment: Alignment.bottomRight,
@@ -196,6 +198,69 @@ class _AddEmergencyContactState extends State<AddEmergencyContact> {
                       ),
                     ),
                   ),
+
+                  // CircleAvatar(
+                  //   backgroundImage: widget.currentProfilePicture != '' &&
+                  //           profileImage == null &&
+                  //           widget.flag == 0
+                  //       ? NetworkImage(widget.currentProfilePicture!
+                  //           as String) // Cast to String
+                  //       : profileImage == null
+                  //           ? AssetImage(
+                  //               'assets/images/default_profile_pic.jpg')
+                  //           : FileImage(profileImage as File), // Cast to File
+                  //   radius: 65,
+                  //   child: Align(
+                  //     alignment: Alignment.bottomRight,
+                  //     child: Container(
+                  //       height: 50,
+                  //       width: 50,
+                  //       child: FloatingActionButton(
+                  //         backgroundColor: kAmaranth,
+                  //         onPressed: () {
+                  //           showModalBottomSheet(
+                  //               backgroundColor: Colors.transparent,
+                  //               context: context,
+                  //               builder: (context) {
+                  //                 return Container(
+                  //                   height: 130,
+                  //                   decoration: BoxDecoration(
+                  //                     color: kSpaceCadet,
+                  //                     borderRadius: BorderRadius.vertical(
+                  //                       top: Radius.circular(15),
+                  //                     ),
+                  //                   ),
+                  //                   child: ListView(
+                  //                     children: [
+                  //                       ListTile(
+                  //                         leading: Icon(Icons.camera_alt),
+                  //                         title: Text('Choose from Camera'),
+                  //                         onTap: () {
+                  //                           getImage(ImageSource.camera);
+                  //                           Navigator.pop(context);
+                  //                         },
+                  //                       ),
+                  //                       Divider(),
+                  //                       ListTile(
+                  //                         leading: Icon(Icons.collections),
+                  //                         title: Text('Choose from gallery'),
+                  //                         onTap: () {
+                  //                           getImage(ImageSource.gallery);
+                  //                           Navigator.pop(context);
+                  //                         },
+                  //                       )
+                  //                     ],
+                  //                   ),
+                  //                 );
+                  //               });
+                  //         },
+                  //         child: Icon(
+                  //           Icons.add_a_photo_sharp,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ),
               ),
               Padding(
@@ -205,7 +270,7 @@ class _AddEmergencyContactState extends State<AddEmergencyContact> {
                   child: TextFormField(
                     initialValue: name,
                     validator: (val) {
-                      return val.isEmpty ? 'Name cannot be empty' : null;
+                      return val!.isEmpty ? 'Name cannot be empty' : null;
                     },
                     onChanged: (val) {
                       name = val;

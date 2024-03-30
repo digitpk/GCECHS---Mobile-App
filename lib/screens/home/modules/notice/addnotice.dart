@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:housingsociety/screens/home/modules/notice/notice.dart';
 import 'package:housingsociety/services/database.dart';
 import 'package:housingsociety/shared/constants.dart';
 
 class AddNotice extends StatefulWidget {
   static const String id = 'add_notice';
-  final String editTitle;
-  final String editNotice;
-  final int flag;
-  final String docid;
+  final String? editTitle;
+  final String? editNotice;
+  final int? flag;
+  final String? docid;
   AddNotice({this.editTitle, this.editNotice, this.flag, this.docid});
 
   @override
@@ -17,7 +16,7 @@ class AddNotice extends StatefulWidget {
 }
 
 class _AddNoticeState extends State<AddNotice> {
-  FocusNode myFocusNode;
+  FocusNode? myFocusNode;
   String title = '';
   String notice = '';
 
@@ -26,15 +25,15 @@ class _AddNoticeState extends State<AddNotice> {
     super.initState();
     myFocusNode = FocusNode();
     if (widget.flag == 0) {
-      title = widget.editTitle;
-      notice = widget.editNotice;
+      title = widget.editTitle!;
+      notice = widget.editNotice!;
     }
   }
 
   @override
   void dispose() {
     // Clean up the focus node when the Form is disposed.
-    myFocusNode.dispose();
+    myFocusNode!.dispose();
     super.dispose();
   }
 
@@ -42,7 +41,7 @@ class _AddNoticeState extends State<AddNotice> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        myFocusNode.requestFocus();
+        myFocusNode!.requestFocus();
       },
       child: Scaffold(
         appBar: AppBar(

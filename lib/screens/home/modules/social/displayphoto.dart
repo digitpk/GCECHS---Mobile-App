@@ -4,8 +4,8 @@ import 'package:housingsociety/screens/home/modules/social/reusableposttile.dart
 import 'package:housingsociety/shared/loading.dart';
 
 class DisplayPhoto extends StatelessWidget {
-  final String docid;
-  final Map likes;
+  final String? docid;
+  final Map? likes;
   DisplayPhoto({this.docid, this.likes});
 
   @override
@@ -27,11 +27,11 @@ class DisplayPhoto extends StatelessWidget {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Loading();
               }
-              DocumentSnapshot document = snapshot.data;
+              DocumentSnapshot document = snapshot.data!;
               print(document);
               return ReusablePostDisplayTile(
-                document: document,
-                likes: likes,
+                document: document as DocumentSnapshot<Map<String, dynamic>>,
+                likes: likes!,
               );
             }),
       ),

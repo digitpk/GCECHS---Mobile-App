@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:housingsociety/models/user.dart';
 import 'package:housingsociety/services/storage.dart';
@@ -8,7 +9,7 @@ import 'package:provider/provider.dart';
 
 class UploadPage extends StatefulWidget {
   static const String id = 'upload_page';
-  final String username;
+  final String? username;
   UploadPage({this.username});
   @override
   _UploadPageState createState() => _UploadPageState();
@@ -17,23 +18,42 @@ class UploadPage extends StatefulWidget {
 class _UploadPageState extends State<UploadPage> {
   final StorageService storage = StorageService();
   String caption = '';
-  File photo;
-  String photoPath;
+  File? photo;
+  String? photoPath;
   final picker = ImagePicker();
 
   Future getImage(source, uid) async {
-    final pickedFile = await picker.getImage(
+    final pickedFile = await picker.pickImage(
       source: source,
       imageQuality: 50,
     );
 
-    setState(() {
-      if (pickedFile != null) {
+    if (pickedFile != null) {
+      String profileImagePath = pickedFile.path;
+
+      // Show any UI to let the user confirm or adjust the image if needed
+      // Then upload the image to storage
+      await storage.uploadProfilePicture(profileImagePath, uid);
+
+      setState(() {
         photo = File(pickedFile.path);
-        photoPath = pickedFile.path;
-      }
-    });
+      });
+    }
   }
+
+  // Future getImage(source, uid) async {
+  //   final pickedFile = await picker.getImage(
+  //     source: source,
+  //     imageQuality: 50,
+  //   );
+  //
+  //   setState(() {
+  //     if (pickedFile != null) {
+  //       photo = File(pickedFile.path);
+  //       photoPath = pickedFile.path;
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -90,8 +110,8 @@ class _UploadPageState extends State<UploadPage> {
                 color: kAmaranth,
               ),
               onPressed: () {
-                storage.uploadPhoto(photoPath, user.uid, caption,
-                    widget.username, user.profilePicture);
+                storage.uploadPhoto(photoPath!, user.uid!, caption,
+                    widget.username!, user.profilePicture!);
                 Navigator.pop(context);
               },
             ),
@@ -129,7 +149,7 @@ class _UploadPageState extends State<UploadPage> {
                 ? SizedBox(
                     height: 0,
                   )
-                : Image.file(photo),
+                : Image.file(photo!),
           ],
         ),
       ),

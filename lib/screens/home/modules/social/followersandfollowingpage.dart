@@ -4,8 +4,8 @@ import 'package:housingsociety/screens/home/modules/social/otherusersprofilepage
 import 'package:housingsociety/shared/loading.dart';
 
 class FollowersAndFollowing extends StatefulWidget {
-  final String pageToDisplay;
-  final String username;
+  final String? pageToDisplay;
+  final String? username;
   FollowersAndFollowing({this.pageToDisplay, this.username});
 
   @override
@@ -13,9 +13,9 @@ class FollowersAndFollowing extends StatefulWidget {
 }
 
 class _FollowersAndFollowingState extends State<FollowersAndFollowing> {
-  String userid;
-  Query followersdisplay;
-  Query followingdisplay;
+  String? userid;
+  Query? followersdisplay;
+  Query? followingdisplay;
   List<String> followersUid = [];
   List<String> followingUid = [];
   int initialIndex = 0;
@@ -28,7 +28,7 @@ class _FollowersAndFollowingState extends State<FollowersAndFollowing> {
         .doc(widget.username)
         .get()
         .then((DocumentSnapshot<Map<String, dynamic>> documentSnapshot) {
-      userid = documentSnapshot.data()['uid'];
+      userid = documentSnapshot.data()!['uid'];
       CollectionReference<Map<String, dynamic>> followers = FirebaseFirestore
           .instance
           .collection('module_social')
@@ -76,7 +76,7 @@ class _FollowersAndFollowingState extends State<FollowersAndFollowing> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(widget.username),
+          title: Text(widget.username!),
           bottom: TabBar(tabs: <Widget>[
             Tab(
               text: 'Followers',
@@ -91,13 +91,13 @@ class _FollowersAndFollowingState extends State<FollowersAndFollowing> {
             followersdisplay == null
                 ? Center(child: Text('No users to display'))
                 : FollowersandFollowingdisplaytile(
-                    displaytile: followersdisplay,
+                    displaytile: followersdisplay!,
                     following: followingUid,
                   ),
             followingdisplay == null
                 ? Center(child: Text('No users to display'))
                 : FollowersandFollowingdisplaytile(
-                    displaytile: followingdisplay,
+                    displaytile: followingdisplay!,
                     following: followingUid,
                   ),
           ],
@@ -110,13 +110,16 @@ class _FollowersAndFollowingState extends State<FollowersAndFollowing> {
 class FollowersandFollowingdisplaytile extends StatelessWidget {
   FollowersandFollowingdisplaytile({this.displaytile, this.following});
 
-  final Query displaytile;
-  final List following;
+  final Query? displaytile;
+  final List? following;
 
   @override
   Widget build(BuildContext context) {
+    Future<QuerySnapshot<Map<String, dynamic>>> futureData =
+        displaytile!.get() as Future<QuerySnapshot<Map<String, dynamic>>>;
+
     return FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
-      future: displaytile.get(),
+      future: futureData,
       builder: (BuildContext context,
           AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
         if (snapshot.hasError) {
@@ -127,7 +130,7 @@ class FollowersandFollowingdisplaytile extends StatelessWidget {
         }
 
         return ListView(
-          children: snapshot.data.docs
+          children: snapshot.data!.docs
               .map((DocumentSnapshot<Map<String, dynamic>> document) {
             return ListTile(
               onTap: () {
@@ -135,17 +138,18 @@ class FollowersandFollowingdisplaytile extends StatelessWidget {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (BuildContext context) {
                   return UserProfilePage(
-                    uid: document.data()['uid'],
-                    username: document.data()['username'],
-                    following: following.contains(document.data()['uid']),
+                    uid: document.data()!['uid'],
+                    username: document.data()!['username'],
+                    following: following!.contains(document.data()!['uid']),
                   );
                 }));
               },
               leading: CircleAvatar(
-                  backgroundImage: document.data()['profile_picture'] == ''
+                  backgroundImage: document.data()!['profile_picture'] == ''
                       ? AssetImage('assets/images/default_profile_pic.jpg')
-                      : NetworkImage(document.data()['profile_picture'])),
-              title: Text(document.data()['username']),
+                          as ImageProvider<Object>?
+                      : NetworkImage(document.data()!['profile_picture'])),
+              title: Text(document.data()!['username']),
             );
           }).toList(),
         );

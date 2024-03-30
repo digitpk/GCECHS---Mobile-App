@@ -20,16 +20,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<CurrentUser>.value(
-      initialData: null,
-      value: AuthService().user,
+      initialData:
+          CurrentUser(uid: null, email: null, name: null, profilePicture: null),
+      value: AuthService()
+          .user, // Make sure AuthService().user returns Stream<CurrentUser>
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData.dark().copyWith(
           primaryColor: Color(0xFF0A0E21),
           scaffoldBackgroundColor: Color(0xFF0A0E21),
         ),
-        home: Wrapper(),
-        routes: routes,
+        home: Wrapper(), // Ensure Wrapper handles user authentication
+        routes: routes, // Define your routes
       ),
     );
   }

@@ -98,7 +98,8 @@ class _ProfileState extends State<Profile> {
                             ? NetworkImage(
                                 snapshot.data!['profile_picture'] as String)
                             : AssetImage(
-                                'assets/images/default_profile_pic.jpg'),
+                                    'assets/images/default_profile_pic.jpg')
+                                as ImageProvider<Object>?,
 
                         child: Align(
                           alignment: Alignment.bottomRight,
