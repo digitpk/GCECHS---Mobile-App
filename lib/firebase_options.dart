@@ -48,7 +48,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyDoMZnhZVGIBmWyp80g3_JcUYDEZg5waQo',
-    appId: '1:902426529724:web:11193edecb79ce6be8a5b9',
+    appId: '1:902426529724:web:1f3b2b45999e19ace8a5b9',
     messagingSenderId: '902426529724',
     projectId: 'gcechs-org',
     authDomain: 'gcechs-org.firebaseapp.com',
@@ -58,7 +58,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDVzbEUebV1Wrahkmw0VjE_dMGlinOjZZU',
-    appId: '1:902426529724:android:cb3026c7cda8efdee8a5b9',
+    appId: '1:902426529724:android:b456a0f83e0e36a3e8a5b9',
     messagingSenderId: '902426529724',
     projectId: 'gcechs-org',
     databaseURL: 'https://gcechs-org-default-rtdb.asia-southeast1.firebasedatabase.app',
@@ -67,13 +67,13 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyC8rB_FVnrsVBN9sHqCjAzgmEitn0Hq4jo',
-    appId: '1:902426529724:ios:997dffcc2bbe175ce8a5b9',
+    appId: '1:902426529724:ios:d1ddda17318a59f9e8a5b9',
     messagingSenderId: '902426529724',
     projectId: 'gcechs-org',
     databaseURL: 'https://gcechs-org-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'gcechs-org.appspot.com',
     androidClientId: '902426529724-8v9528b1k8r9pukp845j9st5c0osde93.apps.googleusercontent.com',
-    iosClientId: '902426529724-oluoaqbfbg4qafeqqutob113mqvkt0ma.apps.googleusercontent.com',
-    iosBundleId: 'com.example.housingsociety',
+    iosClientId: '902426529724-re8ig9b52gue2msi724j3jthsgtals8k.apps.googleusercontent.com',
+    iosBundleId: 'pk.digit.gcechs',
   );
 }

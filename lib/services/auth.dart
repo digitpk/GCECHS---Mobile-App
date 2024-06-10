@@ -6,100 +6,80 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   DatabaseService db = DatabaseService();
 
-  CurrentUser _userFromFirebase(User? user) {
-    return user != null
-        ? CurrentUser(
-            uid: user.uid,
-            email: user.email,
-            name: user.displayName,
-            profilePicture: user.photoURL)
-        : CurrentUser(
-            uid: '',
-            email: '',
-            name: '',
-            profilePicture: ''); // Provide default values or handle null case
+  // CurrentUser _userFromFireBase(User user) {
+  //   return user != null
+  //       ? CurrentUser(
+  //       uid: user.uid,
+  //       email: user.email,
+  //       name: user.displayName,
+  //       profilePicture: user.photoURL)
+  //       : null;
+  // }
+
+  CurrentUser _userFromFireBase(User? user) {
+    if (user != null) {
+      return CurrentUser(
+        uid: user.uid,
+        email: user.email,
+        name: user.displayName ?? '',
+        // Provide a default value for name if null
+        profilePicture: user.photoURL ?? '',
+        // Provide a default value for profilePicture if null
+      );
+    } else {
+      throw Exception(
+          "User is not authenticated"); // Throw an exception for null user
+    }
   }
 
   Stream<CurrentUser> get user {
-    return _auth.userChanges().map(_userFromFirebase);
+    return _auth.userChanges().map((user) {
+      try {
+        if (user != null) {
+          return _userFromFireBase(user);
+          // Return non-nullable CurrentUser object
+        } else {
+          throw Exception("User is not authenticated");
+        }
+      } catch (e) {
+        print("Error: $e");
+        // Handle the exception by returning a default user object or null
+        return CurrentUser(uid: '', email: '', name: '', profilePicture: '');
+      }
+    });
   }
 
-  Future<User?> createUserWithEmailAndPassword(String email, String password,
+  // Stream<CurrentUser> get user {
+  //   return _auth.userChanges().map(_userFromFireBase);
+  // }
+
+  Future createUserWithEmailAndPassword(String email, String password,
       String name, String wing, String flatno) async {
     try {
-      UserCredential userCredential =
-          await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      UserCredential userCredential = await _auth
+          .createUserWithEmailAndPassword(email: email, password: password);
 
-      await userCredential.user!.updateProfile(displayName: name);
-      await userCredential.user!.reload();
-      User updatedUser = _auth.currentUser!;
-      print(updatedUser.displayName);
-
-      await db.setProfileonRegistration(
-        updatedUser.uid,
-        name,
-        wing,
-        flatno,
-      );
-
-      return updatedUser;
+      userCredential.user!.updateProfile(displayName: name).then((_) {
+        User user = _auth.currentUser!;
+        user.reload();
+        User updateduser = _auth.currentUser!;
+        print(updateduser.displayName);
+        db.setProfileonRegistration(user.uid, name, wing, flatno);
+        return _userFromFireBase(updateduser);
+      });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
+        return null;
       } else if (e.code == 'email-already-in-use') {
         print('The account already exists for that email.');
+        return null;
       }
-      return null;
     } catch (e) {
       print(e);
       return null;
     }
   }
-
-  // CurrentUser? _userFromFireBase(User user) {
-  //   return user != null
-  //       ? CurrentUser(
-  //           uid: user.uid,
-  //           email: user.email,
-  //           name: user.displayName,
-  //           profilePicture: user.photoURL)
-  //       : null;
-  // }
-  //
-  // Stream<CurrentUser> get user {
-  //   return _auth.userChanges().map(_userFromFireBase);
-  // }
-
-  // Future createUserWithEmailAndPassword(String email, String password,
-  //     String name, String wing, String flatno) async {
-  //   try {
-  //     UserCredential userCredential = await _auth
-  //         .createUserWithEmailAndPassword(email: email, password: password);
-  //
-  //     userCredential.user.updateProfile(displayName: name).then((_) {
-  //       User user = _auth.currentUser;
-  //       user.reload();
-  //       User updateduser = _auth.currentUser;
-  //       print(updateduser.displayName);
-  //       db.setProfileonRegistration(user.uid, name, wing, flatno);
-  //       return _userFromFireBase(updateduser);
-  //     });
-  //   } on FirebaseAuthException catch (e) {
-  //     if (e.code == 'weak-password') {
-  //       print('The password provided is too weak.');
-  //       return null;
-  //     } else if (e.code == 'email-already-in-use') {
-  //       print('The account already exists for that email.');
-  //       return null;
-  //     }
-  //   } catch (e) {
-  //     print(e);
-  //     return null;
-  //   }
-  // }
 
   Future logInWithEmailAndPassword(String email, String password) async {
     try {
@@ -108,8 +88,8 @@ class AuthService {
         email: email,
         password: password,
       );
-      User? user = userCredential.user;
-      return _userFromFirebase(user!);
+      User user = userCredential.user!;
+      return _userFromFireBase(user);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
@@ -124,14 +104,14 @@ class AuthService {
     }
   }
 
-  String? userName() {
-    final User? user = _auth.currentUser;
-    return user!.displayName;
+  String userName() {
+    final User user = _auth.currentUser!;
+    return user.displayName!;
   }
 
   String userId() {
-    final User? user = _auth.currentUser;
-    return user!.uid;
+    final User user = _auth.currentUser!;
+    return user.uid;
   }
 
   Future signOut() async {
@@ -139,73 +119,58 @@ class AuthService {
     return null;
   }
 
-  // Future<User?> updateDisplayName(updatedName) async {
-  //   try {
-  //     await _auth.currentUser?.updateProfile(displayName: updatedName);
-  //     await _auth.currentUser?.reload();
-  //     User updatedUser = _auth.currentUser!;
-  //     return updatedUser;
-  //   } catch (e) {
-  //     print(e);
-  //     return null;
-  //   }
-  // }
-
-  Future<CurrentUser?> updateDisplayName(updatedName) async {
-    try {
-      await _auth.currentUser?.updateProfile(displayName: updatedName);
-      await _auth.currentUser?.reload();
-      User updatedUser = _auth.currentUser!;
-      return _userFromFirebase(updatedUser);
-    } catch (e) {
-      print(e);
-      return null;
-    }
+  Future updateDisplayName(updatedName) async {
+    _auth.currentUser!
+        .updateProfile(
+      displayName: updatedName,
+    )
+        .then((_) {
+      User user = _auth.currentUser!;
+      user.reload();
+      User updateduser = _auth.currentUser!;
+      return _userFromFireBase(updateduser);
+    });
+    return userName();
   }
-
-  // Future updateDisplayName(updatedName) async {
-  //   _auth.currentUser
-  //       .updateProfile(
-  //     displayName: updatedName,
-  //   )
-  //       .then((_) {
-  //     User user = _auth.currentUser;
-  //     user.reload();
-  //     User updateduser = _auth.currentUser;
-  //     return _userFromFireBase(updateduser);
-  //   });
-  //   return userName();
-  // }
 
   Future updateProfilePicture(updatedProfilePicture) async {
     _auth.currentUser!.updateProfile(
       photoURL: updatedProfilePicture,
     );
-    return _userFromFirebase(_auth.currentUser);
+    return _userFromFireBase(_auth.currentUser);
   }
 
-  Future<String> updateEmail(String newEmail, String password) async {
+  Future updateEmail(email, password) async {
     try {
+      // Create a credential object for reauthentication
       AuthCredential credential = EmailAuthProvider.credential(
         email: _auth.currentUser!.email!,
         password: password,
       );
 
+      // Reauthenticate the current user with the provided credential
       await _auth.currentUser!.reauthenticateWithCredential(credential);
-      await _auth.currentUser!.updateEmail(newEmail);
 
+      // Update the email address of the current user
+      await _auth.currentUser!.updateEmail(email);
+
+      // Return a success message if the email is updated successfully
       return 'Email updated successfully';
     } on FirebaseAuthException catch (e) {
+      // Handle FirebaseAuthException errors
       if (e.code == 'email-already-in-use') {
         return 'The account already exists for that email.';
       } else if (e.code == 'wrong-password') {
         return 'Wrong password provided.';
       } else {
-        return 'An unexpected error occurred. Please try again later.';
+        // Handle other FirebaseAuthException errors
+        print('FirebaseAuthException: ${e.message}');
+        return 'An error occurred. Please try again.';
       }
     } catch (e) {
-      print(e);
-      return 'An unexpected error occurred. Please try again later.';
+      // Handle generic errors
+      print('Error: $e');
+      return 'An error occurred. Please try again.';
     }
   }
 
@@ -231,41 +196,51 @@ class AuthService {
   //   }
   // }
 
-  Future<String> updatePassword(oldPassword, newPassword) async {
+  Future updatePassword(oldPassword, newPassword) async {
     try {
+      // Create a credential object for reauthentication with old password
       AuthCredential credential = EmailAuthProvider.credential(
         email: _auth.currentUser!.email!,
         password: oldPassword,
       );
 
+      // Reauthenticate the current user with the provided credential
       await _auth.currentUser!.reauthenticateWithCredential(credential);
+
+      // Update the password of the current user
       await _auth.currentUser!.updatePassword(newPassword);
 
+      // Return a success message if the password is updated successfully
       return 'Password updated successfully';
     } on FirebaseAuthException catch (e) {
+      // Handle FirebaseAuthException errors
       if (e.code == 'wrong-password') {
         return 'Wrong password provided.';
       } else {
-        return 'An error occurred. Please try again later.';
+        // Handle other FirebaseAuthException errors
+        print('FirebaseAuthException: ${e.message}');
+        return 'An error occurred. Please try again.';
       }
     } catch (e) {
-      return 'An unexpected error occurred. Please try again later.';
+      // Handle generic errors
+      print('Error: $e');
+      return 'An error occurred. Please try again.';
     }
   }
 
   // Future updatePassword(oldPassword, newPassword) async {
   //   try {
-  //     EmailAuthCredential credential = EmailAuthProvider.credential(
-  //       email: _auth.currentUser.email,
+  //     AuthCredential credential = EmailAuthProvider.credential(
+  //       email: _auth.currentUser!.email!,
   //       password: oldPassword,
   //     );
-  //     await _auth.currentUser.reauthenticateWithCredential(credential);
-  //     await _auth.currentUser.updatePassword(newPassword);
-  //     EmailAuthCredential newCredential = EmailAuthProvider.credential(
-  //       email: _auth.currentUser.email,
+  //     await _auth.currentUser!.reauthenticateWithCredential(credential);
+  //     await _auth.currentUser!.updatePassword(newPassword);
+  //     AuthCredential newCredential = EmailAuthProvider.credential(
+  //       email: _auth.currentUser!.email!,
   //       password: newPassword,
   //     );
-  //     await _auth.currentUser.reauthenticateWithCredential(newCredential);
+  //     await _auth.currentUser!.reauthenticateWithCredential(newCredential);
   //     return 'Password updated successfully';
   //   } on FirebaseAuthException catch (e) {
   //     if (e.code == 'wrong-password') {

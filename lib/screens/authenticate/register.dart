@@ -5,8 +5,8 @@ import 'package:housingsociety/shared/loading.dart';
 import 'package:housingsociety/shared/snackbarpage.dart';
 
 class Register extends StatefulWidget {
-  final Function? toggle;
-  Register({this.toggle});
+  final Function toggle;
+  Register({required this.toggle});
 
   @override
   _RegisterState createState() => _RegisterState();
@@ -168,7 +168,8 @@ class _RegisterState extends State<Register> {
                             width: double.infinity,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                primary: kAmaranth,
+                                backgroundColor: kAmaranth,
+                                // primary: kAmaranth,
                               ),
                               onPressed: () async {
                                 if (_formkey.currentState!.validate()) {
@@ -194,7 +195,7 @@ class _RegisterState extends State<Register> {
                           ),
                           TextButton(
                             onPressed: () {
-                              widget.toggle!();
+                              widget.toggle();
                             },
                             child: Text(
                               'Already have an account?',
