@@ -22,19 +22,25 @@ import 'package:provider/provider.dart';
 //   }
 // }
 
-class Wrapper extends StatelessWidget {
+class Wrapper extends StatefulWidget {
+  @override
+  State<Wrapper> createState() => _WrapperState();
+}
+
+class _WrapperState extends State<Wrapper> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<CurrentUser>(context);
-    print("Wrapper - User Authenticated: ${user != null}");
-
     // Check if the user is authenticated
-    if (user == null) {
-      // User is not authenticated, navigate to the login screen
+    if (user.uid == null) {
+      setState(() {});
       return Authenticate();
+      // User is not authenticated, navigate to the login screen
     } else {
-      // User is authenticated, navigate to the home screen
+      setState(() {});
       return Home();
+      // return Authenticate();
+      // User is authenticated, navigate to the home screen
     }
   }
 }

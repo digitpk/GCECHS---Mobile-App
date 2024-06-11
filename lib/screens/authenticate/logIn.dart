@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:housingsociety/main.dart';
 import 'package:housingsociety/services/auth.dart';
 import 'package:housingsociety/shared/constants.dart';
 import 'package:housingsociety/shared/loading.dart';
-import 'package:housingsociety/shared/snackbarpage.dart';
 
 class LogIn extends StatefulWidget {
   final Function toggle;
@@ -14,7 +14,8 @@ class LogIn extends StatefulWidget {
 class _LogInState extends State<LogIn> {
   final AuthService _auth = AuthService();
   final _formkey = GlobalKey<FormState>();
-
+  final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
+      GlobalKey<ScaffoldMessengerState>();
   String? _email, _password;
   bool buttonEnabled = false;
   bool obscureText = true;
@@ -125,10 +126,7 @@ class _LogInState extends State<LogIn> {
                                     setState(() {
                                       loading = false;
                                     });
-                                    ShowSnackBar().showSnackBar(
-                                      context,
-                                      'Incorrect email id or password',
-                                    );
+                                    showToast('Incorrect email id or password');
                                   }
                                 }
                               },

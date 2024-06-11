@@ -383,8 +383,10 @@ class DatabaseService {
 
   Future getuserdata() async {
     String currentuserid = AuthService().userId();
-    dynamic userdata = await userProfile.doc(currentuserid).get();
-    return userdata;
+    if (currentuserid.isNotEmpty) {
+      dynamic userdata = await userProfile.doc(currentuserid).get();
+      return userdata;
+    }
   }
 
   Future uploadPhotodetails(String uid, Timestamp timestamp, String url,
