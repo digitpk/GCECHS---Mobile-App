@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:housingsociety/firebase_options.dart';
 import 'package:housingsociety/models/user.dart';
 import 'package:housingsociety/screens/wrapper.dart';
@@ -24,7 +26,7 @@ class MyApp extends StatelessWidget {
           CurrentUser(uid: null, email: null, name: null, profilePicture: null),
       // initialData: CurrentUser(uid: null, email: null, name: null, profilePicture: null),
       value: AuthService().user,
-      child: MaterialApp(
+      child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData.dark().copyWith(
           primaryColor: Color(0xFF0A0E21),
@@ -35,4 +37,17 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
+}
+
+//show toast
+Future showToast(String message) {
+  return Fluttertoast.showToast(
+    msg: message,
+    toastLength: Toast.LENGTH_SHORT,
+    gravity: ToastGravity.BOTTOM,
+    timeInSecForIosWeb: 1,
+    backgroundColor: Colors.red,
+    textColor: Colors.white,
+    fontSize: 16.0,
+  );
 }

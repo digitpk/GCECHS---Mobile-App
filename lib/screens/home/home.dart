@@ -36,7 +36,9 @@ class _HomeState extends State<Home> {
   void getuserdata() async {
     await DatabaseService().getuserdata().then((value) {
       setState(() {
-        userType = value.data()['userType'];
+        if (userType != null) {
+          userType = value.data()['userType'];
+        }
       });
     });
   }
@@ -62,8 +64,8 @@ class _HomeState extends State<Home> {
               icon: Icon(Icons.account_circle),
             ),
             IconButton(
-              onPressed: () {
-                _auth.signOut();
+              onPressed: () async {
+                await _auth.signOut();
               },
               icon: Icon(Icons.logout),
             ),

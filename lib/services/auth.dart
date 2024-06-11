@@ -1,6 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 import 'package:housingsociety/models/user.dart';
+import 'package:housingsociety/screens/home/home.dart';
 import 'package:housingsociety/services/database.dart';
+
+import '../screens/authenticate/authenticate.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -27,6 +31,7 @@ class AuthService {
         // Provide a default value for profilePicture if null
       );
     } else {
+      Get.offAll(() => Authenticate());
       throw Exception(
           "User is not authenticated"); // Throw an exception for null user
     }
@@ -39,6 +44,7 @@ class AuthService {
           return _userFromFireBase(user);
           // Return non-nullable CurrentUser object
         } else {
+          Get.offAll(() => Authenticate());
           throw Exception("User is not authenticated");
         }
       } catch (e) {
@@ -89,6 +95,7 @@ class AuthService {
         password: password,
       );
       User user = userCredential.user!;
+      Get.offAll(() => Home());
       return _userFromFireBase(user);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -105,17 +112,27 @@ class AuthService {
   }
 
   String userName() {
-    final User user = _auth.currentUser!;
-    return user.displayName!;
+    if (_auth.currentUser != null) {
+      final User user = _auth.currentUser!;
+      return user.displayName!;
+    } else {
+      return '';
+    }
   }
 
   String userId() {
-    final User user = _auth.currentUser!;
-    return user.uid;
+    if (_auth.currentUser != null) {
+      final User user = _auth.currentUser!;
+      return user.uid;
+    } else {
+      return '';
+    }
   }
 
   Future signOut() async {
-    await _auth.signOut();
+    await _auth.signOut().then((value) {
+      Get.offAll(() => Authenticate());
+    });
     return null;
   }
 
@@ -134,8 +151,8 @@ class AuthService {
   }
 
   Future updateProfilePicture(updatedProfilePicture) async {
-    _auth.currentUser!.updateProfile(
-      photoURL: updatedProfilePicture,
+    _auth.currentUser!.updatePhotoURL(
+      updatedProfilePicture,
     );
     return _userFromFireBase(_auth.currentUser);
   }

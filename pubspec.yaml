@@ -33,6 +33,8 @@ dependencies:
 #  rake:
   pie_chart:
   connectivity:
+  get: ^4.6.6
+  fluttertoast:
 
 
 
