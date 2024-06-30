@@ -31,7 +31,7 @@ class _NoticeState extends State<Notice> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Notice'),
+        title: Text('Notice & Events'),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Visibility(
@@ -62,14 +62,16 @@ class _NoticeState extends State<Notice> {
                 });
               },
               style: TextButton.styleFrom(
-                primary: noticeType == 'notice' ? kAmaranth : Colors.white,
+                foregroundColor:
+                    noticeType == 'notice' ? kAmaranth : Colors.white,
               ),
               icon: Icon(Icons.info),
               label: Text('Notice'),
             ),
             TextButton.icon(
               style: TextButton.styleFrom(
-                primary: noticeType == 'event' ? kAmaranth : Colors.white,
+                foregroundColor:
+                    noticeType == 'event' ? kAmaranth : Colors.white,
               ),
               onPressed: () {
                 setState(() {

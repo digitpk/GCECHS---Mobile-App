@@ -111,7 +111,7 @@ class _LogInState extends State<LogIn> {
                             width: double.infinity,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                primary: kAmaranth,
+                                backgroundColor: kAmaranth,
                               ),
                               // color: kAmaranth,
                               onPressed: () async {

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:housingsociety/screens/authenticate/authenticate.dart';
 import 'package:housingsociety/services/auth.dart';
 import 'package:housingsociety/shared/constants.dart';
 import 'package:housingsociety/shared/loading.dart';
@@ -88,10 +90,15 @@ class _RegisterState extends State<Register> {
                               Expanded(
                                 child: TextFormField(
                                   onChanged: (val) {
-                                    wing = val;
+                                    flatno = val;
+                                  },
+                                  validator: (val) {
+                                    return val!.isEmpty
+                                        ? 'Enter flat no'
+                                        : null;
                                   },
                                   decoration: InputDecoration(
-                                    labelText: 'Wing',
+                                    labelText: 'House No.',
                                     border: OutlineInputBorder(),
                                   ),
                                 ),
@@ -102,19 +109,33 @@ class _RegisterState extends State<Register> {
                               Expanded(
                                 child: TextFormField(
                                   onChanged: (val) {
-                                    flatno = val;
-                                  },
-                                  validator: (val) {
-                                    return val!.isEmpty
-                                        ? 'Enter flat no'
-                                        : null;
+                                    wing = val;
                                   },
                                   decoration: InputDecoration(
-                                    labelText: 'Flat no.',
+                                    labelText: 'Street No.',
                                     border: OutlineInputBorder(),
                                   ),
                                 ),
                               ),
+                              // SizedBox(
+                              //   width: 10,
+                              // ),
+                              // Expanded(
+                              //   child: TextFormField(
+                              //     onChanged: (val) {
+                              //       flatno = val;
+                              //     },
+                              //     validator: (val) {
+                              //       return val!.isEmpty
+                              //           ? 'Enter flat no'
+                              //           : null;
+                              //     },
+                              //     decoration: InputDecoration(
+                              //       labelText: 'Flat no.',
+                              //       border: OutlineInputBorder(),
+                              //     ),
+                              //   ),
+                              // ),
                             ],
                           ),
                           SizedBox(
@@ -188,7 +209,12 @@ class _RegisterState extends State<Register> {
                                       'An error occurred. Please try again',
                                     );
                                   }
+                                  ShowSnackBar().showSnackBar(
+                                    context,
+                                    'Successfully Registered, Now Logged In',
+                                  );
                                 }
+                                Get.offAll(() => Authenticate());
                               },
                               child: Text('Continue'),
                             ),

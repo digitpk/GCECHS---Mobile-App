@@ -203,7 +203,7 @@ class _RealTimeComplaintUpdateState extends State<RealTimeComplaintUpdate> {
                                                                       ElevatedButton(
                                                                     style: ElevatedButton
                                                                         .styleFrom(
-                                                                      primary:
+                                                                      backgroundColor:
                                                                           kAmaranth,
                                                                     ),
                                                                     onPressed:

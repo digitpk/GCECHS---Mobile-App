@@ -242,7 +242,7 @@ class _ProfileState extends State<Profile> {
                                                   )),
                                               ElevatedButton(
                                                 style: ElevatedButton.styleFrom(
-                                                  primary: kAmaranth,
+                                                  backgroundColor: kAmaranth,
                                                 ),
                                                 onPressed: () {
                                                   AuthService().delteAccount();

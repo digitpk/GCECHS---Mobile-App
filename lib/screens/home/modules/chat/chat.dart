@@ -23,7 +23,7 @@ class _ChatState extends State<Chat> {
     var _textController = TextEditingController();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Chat'),
+        title: Text('Community Chat'),
       ),
       body: SafeArea(
         child: Column(

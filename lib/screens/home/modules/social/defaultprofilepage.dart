@@ -100,7 +100,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     Expanded(
                       child: TextButton(
-                        style: TextButton.styleFrom(primary: Colors.white),
+                        style:
+                            TextButton.styleFrom(foregroundColor: Colors.white),
                         onPressed: () {
                           Navigator.push(
                             context,
@@ -131,7 +132,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     Expanded(
                       child: TextButton(
-                        style: TextButton.styleFrom(primary: Colors.white),
+                        style:
+                            TextButton.styleFrom(foregroundColor: Colors.white),
                         onPressed: () {
                           Navigator.push(
                             context,

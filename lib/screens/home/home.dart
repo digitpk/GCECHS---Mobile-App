@@ -3,12 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:housingsociety/screens/home/modules/chat/chat.dart';
 import 'package:housingsociety/screens/home/modules/complaints/complaint.dart';
 import 'package:housingsociety/screens/home/modules/contacts/contacts.dart';
-import 'package:housingsociety/screens/home/modules/health/health.dart';
 import 'package:housingsociety/screens/home/modules/notice/notice.dart';
 import 'package:housingsociety/screens/home/modules/profile/profile.dart';
-import 'package:housingsociety/screens/home/modules/social/wrappersocial.dart';
-import 'package:housingsociety/screens/home/modules/visitor/visitor.dart';
-import 'package:housingsociety/screens/home/modules/voting/voting.dart';
 import 'package:housingsociety/screens/home/reusableCard.dart';
 import 'package:housingsociety/services/auth.dart';
 import 'package:housingsociety/services/database.dart';
@@ -71,7 +67,7 @@ class _HomeState extends State<Home> {
             ),
           ],
           title: Text(
-            'Home',
+            'GCECHS',
             style: TextStyle(
               color: Colors.white,
             ),
@@ -114,68 +110,92 @@ class _HomeState extends State<Home> {
                           },
                         ),
                         ReusableCard(
-                          icon: Icons.how_to_vote,
-                          text: 'Voting',
-                          onpress: () {
-                            Navigator.pushNamed(context, Voting.id);
-                          },
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        ReusableCard(
                           icon: Icons.contacts,
                           text: 'Contacts',
                           onpress: () {
                             Navigator.pushNamed(context, Contacts.id);
                           },
                         ),
-                        ReusableCard(
-                          icon: Icons.group,
-                          text: 'Social Media',
-                          onpress: () async {
-                            var connectivity = await checkConnectivity();
-                            connectivity == true
-                                ? Navigator.pushNamed(context, WrapperSocial.id)
-                                : showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        content: Text(
-                                            'No Internet connection. Please try again'),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            child: Text('Okay'),
-                                          )
-                                        ],
-                                      );
-                                    });
-                          },
-                        ),
+                        // ReusableCard(
+                        //   icon: Icons.how_to_vote,
+                        //   text: 'Voting',
+                        //   onpress: () {
+                        //     Navigator.pushNamed(context, Voting.id);
+                        //   },
+                        // ),
                       ],
                     ),
-                    Row(
-                      children: [
-                        ReusableCard(
-                          icon: Icons.medical_services,
-                          text: 'Health',
-                          onpress: () {
-                            Navigator.pushNamed(context, Health.id);
-                          },
-                        ),
-                        ReusableCard(
-                          icon: Icons.face,
-                          text: 'Visitor',
-                          onpress: () {
-                            Navigator.pushNamed(context, Visitor.id);
-                          },
-                        ),
-                      ],
+                    // Row(
+                    //   children: [
+                    //     ReusableCard(
+                    //       icon: Icons.contacts,
+                    //       text: 'Contacts',
+                    //       onpress: () {
+                    //         Navigator.pushNamed(context, Contacts.id);
+                    //       },
+                    //     ),
+                    //     ReusableCard(
+                    //       icon: Icons.group,
+                    //       text: 'Social Media',
+                    //       onpress: () async {
+                    //         var connectivity = await checkConnectivity();
+                    //         connectivity == true
+                    //             ? Navigator.pushNamed(context, WrapperSocial.id)
+                    //             : showDialog(
+                    //                 context: context,
+                    //                 builder: (context) {
+                    //                   return AlertDialog(
+                    //                     content: Text(
+                    //                         'No Internet connection. Please try again'),
+                    //                     actions: [
+                    //                       TextButton(
+                    //                         onPressed: () {
+                    //                           Navigator.pop(context);
+                    //                         },
+                    //                         child: Text('Okay'),
+                    //                       )
+                    //                     ],
+                    //                   );
+                    //                 });
+                    //       },
+                    //     ),
+                    //   ],
+                    // ),
+                    // Row(
+                    //   children: [
+                    //     ReusableCard(
+                    //       icon: Icons.medical_services,
+                    //       text: 'Health',
+                    //       onpress: () {
+                    //         Navigator.pushNamed(context, Health.id);
+                    //       },
+                    //     ),
+                    //     ReusableCard(
+                    //       icon: Icons.face,
+                    //       text: 'Visitor',
+                    //       onpress: () {
+                    //         Navigator.pushNamed(context, Visitor.id);
+                    //       },
+                    //     ),
+                    //   ],
+                    // ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.width * 0.95,
                     ),
+                    Center(
+                      child: Column(
+                        children: [
+                          Text('Developed and maintained by:'),
+                          InkWell(
+                            child: Text(
+                              'DIGIT Pakistan',
+                              style: TextStyle(color: Colors.red),
+                            ),
+                            onTap: () {},
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),
