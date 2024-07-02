@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>902426529724-oluoaqbfbg4qafeqqutob113mqvkt0ma.apps.googleusercontent.com</string>
+	<string>902426529724-re8ig9b52gue2msi724j3jthsgtals8k.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.902426529724-oluoaqbfbg4qafeqqutob113mqvkt0ma</string>
+	<string>com.googleusercontent.apps.902426529724-re8ig9b52gue2msi724j3jthsgtals8k</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>902426529724-8v9528b1k8r9pukp845j9st5c0osde93.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -31,7 +31,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:902426529724:ios:997dffcc2bbe175ce8a5b9</string>
+	<string>1:902426529724:ios:d1ddda17318a59f9e8a5b9</string>
 	<key>DATABASE_URL</key>
 	<string>https://gcechs-org-default-rtdb.asia-southeast1.firebasedatabase.app</string>
 </dict>
