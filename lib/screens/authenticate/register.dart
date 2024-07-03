@@ -1,10 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:housingsociety/screens/authenticate/authenticate.dart';
 import 'package:housingsociety/services/auth.dart';
 import 'package:housingsociety/shared/constants.dart';
 import 'package:housingsociety/shared/loading.dart';
 import 'package:housingsociety/shared/snackbarpage.dart';
+
+import 'logIn.dart';
 
 class Register extends StatefulWidget {
   final Function toggle;
@@ -194,27 +196,46 @@ class _RegisterState extends State<Register> {
                               ),
                               onPressed: () async {
                                 if (_formkey.currentState!.validate()) {
-                                  setState(() {
-                                    loading = true;
-                                  });
-                                  dynamic result = await _auth
-                                      .createUserWithEmailAndPassword(_email!,
-                                          _password!, name!, wing, flatno!);
-                                  if (result == null) {
-                                    setState(() {
-                                      loading = false;
-                                    });
+                                  // setState(() {
+                                  //   loading = true;
+                                  // });
+                                  try {
+                                    await _auth.createUserWithEmailAndPassword(
+                                      _email!,
+                                      _password!,
+                                      name!,
+                                      wing,
+                                      flatno!,
+                                    );
                                     ShowSnackBar().showSnackBar(
                                       context,
-                                      'An error occurred. Please try again',
+                                      'Successfully Registered, Now Logged In',
+                                    );
+                                    Get.offAll(() => LogIn(toggle: () {}));
+                                  } on FirebaseAuthException catch (e) {
+                                    ShowSnackBar().showSnackBar(
+                                      context,
+                                      e.message.toString(),
                                     );
                                   }
-                                  ShowSnackBar().showSnackBar(
-                                    context,
-                                    'Successfully Registered, Now Logged In',
-                                  );
+                                  // dynamic result = await _auth
+                                  //     .createUserWithEmailAndPassword(_email!,
+                                  //         _password!, name!, wing, flatno!);
+                                  // if (result == null) {
+                                  //   setState(() {
+                                  //     loading = false;
+                                  //   });
+                                  // ShowSnackBar().showSnackBar(
+                                  //   context,
+                                  //   'An error occurred. Please try again',
+                                  // );
+                                  // }
+                                  // ShowSnackBar().showSnackBar(
+                                  //   context,
+                                  //   'Successfully Registered, Now Logged In',
+                                  // );
+                                  // Get.offAll(() => LogIn(toggle: () {}));
                                 }
-                                Get.offAll(() => Authenticate());
                               },
                               child: Text('Continue'),
                             ),
