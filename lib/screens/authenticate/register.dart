@@ -201,8 +201,8 @@ class _RegisterState extends State<Register> {
                                   // });
                                   try {
                                     await _auth.createUserWithEmailAndPassword(
-                                      _email!,
-                                      _password!,
+                                      _email!.trim(),
+                                      _password!.trim(),
                                       name!,
                                       wing,
                                       flatno!,
